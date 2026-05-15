@@ -1,0 +1,69 @@
+:root {
+  --ember: #E8613A;
+  --ember-dim: #B84B2A;
+  --ember-glow: #FF8A5B;
+  --coal: #1A1208;
+  --ash: #2E2416;
+  --smoke: #3D3020;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0F0F0F;
+  color: #E8E8E8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.mobile-container {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.97); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
+@keyframes fade-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes env-transition {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.anim-pulse { animation: pulse-slow 2.5s ease-in-out infinite; }
+.anim-float { animation: float 3s ease-in-out infinite; }
+.anim-shake { animation: shake 0.5s ease-in-out; }
+.anim-fade { animation: fade-pulse 3s ease-in-out infinite; }
+.anim-still { opacity: 0.4; }

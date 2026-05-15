@@ -1,0 +1,186 @@
+export const colors = {
+  brand: {
+    ember: "#E8613A",
+    emberDim: "#B84B2A",
+    emberGlow: "#FF8A5B",
+    coal: "#1A1208",
+    ash: "#2E2416",
+    smoke: "#3D3020",
+  },
+  environment: {
+    thriving: {
+      bg: "#1A2E1A",
+      accent: "#4CAF50",
+      sky: "#2E4A2E",
+      text: "#A8D5AA",
+    },
+    stable: {
+      bg: "#1A1E2E",
+      accent: "#5B7FA6",
+      sky: "#1E2A3A",
+      text: "#A0B8D4",
+    },
+    struggling: {
+      bg: "#2E1E0A",
+      accent: "#C8874A",
+      sky: "#3A2010",
+      text: "#D4B48A",
+    },
+    critical: {
+      bg: "#2A0A0A",
+      accent: "#C84A4A",
+      sky: "#3A1010",
+      text: "#D4888A",
+    },
+    dormant: {
+      bg: "#0F0F0F",
+      accent: "#444444",
+      sky: "#1A1A1A",
+      text: "#888888",
+    },
+  },
+  companion: {
+    present: "#A8D5AA",
+    hopeful: "#FFD580",
+    worried: "#FF9B6A",
+    grieving: "#9B9BB8",
+    dormant: "#555555",
+  },
+  neutral: {
+    0: "#FFFFFF",
+    50: "#F5F5F5",
+    100: "#E8E8E8",
+    200: "#D0D0D0",
+    300: "#A8A8A8",
+    400: "#787878",
+    500: "#505050",
+    600: "#383838",
+    700: "#282828",
+    800: "#1A1A1A",
+    900: "#0F0F0F",
+    950: "#080808",
+  },
+  semantic: {
+    success: "#4CAF50",
+    warning: "#FF9800",
+    error: "#F44336",
+    info: "#2196F3",
+  },
+} as const;
+
+export const typography = {
+  fontFamily: {
+    sans: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+    serif: "'Georgia', 'Times New Roman', serif",
+    mono: "'Fira Code', 'Cascadia Code', monospace",
+  },
+  fontSize: {
+    xs: "0.75rem",
+    sm: "0.875rem",
+    base: "1rem",
+    lg: "1.125rem",
+    xl: "1.25rem",
+    "2xl": "1.5rem",
+    "3xl": "1.875rem",
+    "4xl": "2.25rem",
+    "5xl": "3rem",
+  },
+  fontWeight: {
+    light: 300,
+    regular: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+  },
+  lineHeight: {
+    tight: 1.2,
+    snug: 1.35,
+    normal: 1.5,
+    relaxed: 1.65,
+    loose: 2,
+  },
+  letterSpacing: {
+    tight: "-0.02em",
+    normal: "0",
+    wide: "0.04em",
+    wider: "0.08em",
+    widest: "0.16em",
+  },
+} as const;
+
+export const spacing = {
+  0: "0",
+  1: "0.25rem",
+  2: "0.5rem",
+  3: "0.75rem",
+  4: "1rem",
+  5: "1.25rem",
+  6: "1.5rem",
+  8: "2rem",
+  10: "2.5rem",
+  12: "3rem",
+  16: "4rem",
+  20: "5rem",
+  24: "6rem",
+  32: "8rem",
+  40: "10rem",
+  48: "12rem",
+  64: "16rem",
+  mobileMax: "430px",
+  mobileMin: "320px",
+} as const;
+
+export const shadows = {
+  none: "none",
+  sm: "0 1px 3px rgba(0,0,0,0.4)",
+  md: "0 4px 12px rgba(0,0,0,0.5)",
+  lg: "0 8px 24px rgba(0,0,0,0.6)",
+  xl: "0 16px 40px rgba(0,0,0,0.7)",
+  glow: {
+    ember: "0 0 20px rgba(232,97,58,0.4), 0 0 40px rgba(232,97,58,0.2)",
+    green: "0 0 20px rgba(76,175,80,0.4)",
+    blue: "0 0 20px rgba(91,127,166,0.4)",
+    red: "0 0 20px rgba(200,74,74,0.4)",
+  },
+  inset: "inset 0 2px 8px rgba(0,0,0,0.5)",
+} as const;
+
+export const borderRadius = {
+  none: "0",
+  sm: "4px",
+  md: "8px",
+  lg: "12px",
+  xl: "16px",
+  "2xl": "24px",
+  "3xl": "32px",
+  full: "9999px",
+  card: "16px",
+  pill: "999px",
+  circle: "50%",
+} as const;
+
+export const animation = {
+  duration: {
+    instant: "0ms",
+    fast: "100ms",
+    normal: "200ms",
+    slow: "350ms",
+    slower: "500ms",
+    sluggish: "800ms",
+    ceremony: "1200ms",
+  },
+  easing: {
+    linear: "linear",
+    easeIn: "cubic-bezier(0.4, 0, 1, 1)",
+    easeOut: "cubic-bezier(0, 0, 0.2, 1)",
+    easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+    spring: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    decelerate: "cubic-bezier(0, 0, 0.2, 1)",
+  },
+  transition: {
+    default: "200ms cubic-bezier(0.4, 0, 0.2, 1)",
+    slow: "500ms cubic-bezier(0.4, 0, 0.2, 1)",
+    spring: "350ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+    environmentShift: "1200ms cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+} as const;
