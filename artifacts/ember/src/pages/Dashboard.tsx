@@ -10,19 +10,30 @@ import { MilestoneToast } from "@/components/MilestoneToast";
 import { todayString } from "@/lib/utils/date";
 import { ENVIRONMENT_STATES } from "@/lib/config/environment-states";
 import { environmentPalette } from "@/lib/config/tokens";
+import { computeJourneyStats } from "@/lib/utils/engine";
 
 type Tab = "home" | "milestones" | "history";
 
 export function Dashboard() {
-  const { getActiveJourney, simulateMissedDays, resetJourney } = useJourneyStore();
-  const data = getActiveJourney();
+  // Proper Zustand selector: subscribes to the specific journey object.
+  // Re-renders whenever the active journey's raw data changes.
+  const journeyData = useJourneyStore(
+    (s) => s.activeJourneyId ? s.journeys[s.activeJourneyId] ?? null : null
+  );
+  const simulateMissedDays = useJourneyStore((s) => s.simulateMissedDays);
+  const resetJourney = useJourneyStore((s) => s.resetJourney);
+
   const [tab, setTab] = useState<Tab>("home");
   const [showCheckIn, setShowCheckIn] = useState(false);
   const [simulating, setSimulating] = useState(false);
 
-  if (!data) return null;
+  if (!journeyData) return null;
 
-  const { journey, stats, checkIns, scars, unlockedMilestones } = data;
+  const { journey, checkIns, scars, unlockedMilestones } = journeyData;
+
+  // Stats are computed from raw data on each render — never stale.
+  const stats = computeJourneyStats(journeyData);
+
   const checkedInToday = checkIns.some((c) => c.date === todayString());
   const envConfig = ENVIRONMENT_STATES[stats.environmentState];
   const pageBg = environmentPalette[stats.environmentState].pageBg;
@@ -85,11 +96,7 @@ export function Dashboard() {
         </div>
       </header>
 
-      <nav style={{
-        display: "flex",
-        gap: "4px",
-        padding: "16px 20px 0",
-      }}>
+      <nav style={{ display: "flex", gap: "4px", padding: "16px 20px 0" }}>
         {(["home", "milestones", "history"] as Tab[]).map((t) => (
           <button
             key={t}

@@ -26,6 +26,10 @@ export interface Scar {
   description: string;
 }
 
+/**
+ * Derived stats computed on demand from raw JourneyData.
+ * Never persisted — always recomputed from source of truth.
+ */
 export interface JourneyStats {
   currentStreak: number;
   longestStreak: number;
@@ -45,10 +49,13 @@ export interface UnlockedMilestone {
   unlockedAt: string;
 }
 
+/**
+ * Raw persisted journey data. No derived fields.
+ * Stats are computed from this via computeJourneyStats().
+ */
 export interface JourneyData {
   journey: Journey;
   checkIns: CheckIn[];
   scars: Scar[];
   unlockedMilestones: UnlockedMilestone[];
-  stats: JourneyStats;
 }

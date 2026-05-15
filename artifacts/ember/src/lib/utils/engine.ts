@@ -126,10 +126,3 @@ export function checkForNewMilestones(
   const now = new Date().toISOString();
   return newIds.map((id) => ({ id, unlockedAt: now }));
 }
-
-export function shouldCreateScar(
-  checkIns: CheckIn[],
-  previousMissedDays: number
-): boolean {
-  return previousMissedDays > 0 && checkIns.length > 0;
-}

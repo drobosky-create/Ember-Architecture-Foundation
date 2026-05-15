@@ -18,7 +18,6 @@ interface JourneyStore {
   checkIn: (journeyId: string, note?: string) => void;
   simulateMissedDays: (journeyId: string, days: number) => void;
   clearPendingMilestones: () => void;
-  getActiveJourney: () => JourneyData | null;
   resetJourney: (journeyId: string) => void;
 }
 
@@ -28,39 +27,25 @@ function generateId(): string {
 
 export const useJourneyStore = create<JourneyStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       activeJourneyId: null,
       journeys: {},
       pendingMilestones: [],
 
       createJourney: (name, intention) => {
         const id = generateId();
-        const today = todayString();
         const journey: Journey = {
           id,
           name,
           intention,
           createdAt: new Date().toISOString(),
-          startDate: today,
+          startDate: todayString(),
         };
         const journeyData: JourneyData = {
           journey,
           checkIns: [],
           scars: [],
           unlockedMilestones: [],
-          stats: {
-            currentStreak: 0,
-            longestStreak: 0,
-            totalCheckIns: 0,
-            totalMissed: 0,
-            recoveries: 0,
-            journeyDaysOld: 0,
-            scarCount: 0,
-            lastCheckInDate: null,
-            environmentState: "stable",
-            companionState: "hopeful",
-            missedDays: 0,
-          },
         };
         set((state) => ({
           journeys: { ...state.journeys, [id]: journeyData },
@@ -80,14 +65,15 @@ export const useJourneyStore = create<JourneyStore>()(
           const alreadyCheckedIn = data.checkIns.some((c) => c.date === today);
           if (alreadyCheckedIn) return state;
 
-          const { missedDays } = computeStreak(data.checkIns);
+          const { current: prevStreak, missedDays } = computeStreak(data.checkIns);
+
           const newScars: Scar[] = [];
           if (missedDays > 0 && data.checkIns.length > 0) {
             newScars.push({
               id: generateId(),
               journeyId,
               brokenAt: today,
-              streakAtBreak: data.stats.currentStreak,
+              streakAtBreak: prevStreak,
               description: `Missed ${missedDays} day${missedDays > 1 ? "s" : ""}`,
             });
           }
@@ -103,7 +89,9 @@ export const useJourneyStore = create<JourneyStore>()(
           const updatedCheckIns = [...data.checkIns, newCheckIn];
           const updatedScars = [...data.scars, ...newScars];
 
-          const newStats = computeJourneyStats({
+          // Compute stats temporarily to detect newly unlocked milestones.
+          // Stats themselves are not stored — they are derived on read.
+          const tempStats = computeJourneyStats({
             journey: data.journey,
             checkIns: updatedCheckIns,
             scars: updatedScars,
@@ -111,23 +99,23 @@ export const useJourneyStore = create<JourneyStore>()(
           });
 
           const newMilestones = checkForNewMilestones(
-            newStats,
+            tempStats,
             data.unlockedMilestones
           );
 
-          const updatedData: JourneyData = {
-            ...data,
-            checkIns: updatedCheckIns,
-            scars: updatedScars,
-            unlockedMilestones: [
-              ...data.unlockedMilestones,
-              ...newMilestones,
-            ],
-            stats: newStats,
-          };
-
           return {
-            journeys: { ...state.journeys, [journeyId]: updatedData },
+            journeys: {
+              ...state.journeys,
+              [journeyId]: {
+                ...data,
+                checkIns: updatedCheckIns,
+                scars: updatedScars,
+                unlockedMilestones: [
+                  ...data.unlockedMilestones,
+                  ...newMilestones,
+                ],
+              },
+            },
             pendingMilestones: [
               ...state.pendingMilestones,
               ...newMilestones,
@@ -140,17 +128,6 @@ export const useJourneyStore = create<JourneyStore>()(
         set((state) => {
           const data = state.journeys[journeyId];
           if (!data) return state;
-
-          const lastCheckIn =
-            data.checkIns.length > 0
-              ? [...data.checkIns].sort((a, b) =>
-                  b.date.localeCompare(a.date)
-                )[0]
-              : null;
-
-          const baseDate = lastCheckIn ? lastCheckIn.date : data.journey.startDate;
-          const targetDate = new Date(baseDate);
-          targetDate.setDate(targetDate.getDate() - days);
 
           const shiftedCheckIns = data.checkIns.map((c) => {
             const d = new Date(c.date);
@@ -167,13 +144,6 @@ export const useJourneyStore = create<JourneyStore>()(
             })(),
           };
 
-          const newStats = computeJourneyStats({
-            journey: updatedJourney,
-            checkIns: shiftedCheckIns,
-            scars: data.scars,
-            unlockedMilestones: data.unlockedMilestones,
-          });
-
           return {
             journeys: {
               ...state.journeys,
@@ -181,7 +151,6 @@ export const useJourneyStore = create<JourneyStore>()(
                 ...data,
                 journey: updatedJourney,
                 checkIns: shiftedCheckIns,
-                stats: newStats,
               },
             },
           };
@@ -190,38 +159,22 @@ export const useJourneyStore = create<JourneyStore>()(
 
       clearPendingMilestones: () => set({ pendingMilestones: [] }),
 
-      getActiveJourney: () => {
-        const { activeJourneyId, journeys } = get();
-        if (!activeJourneyId) return null;
-        return journeys[activeJourneyId] ?? null;
-      },
-
       resetJourney: (journeyId) => {
         set((state) => {
           const data = state.journeys[journeyId];
           if (!data) return state;
-          const today = todayString();
-          const fresh: JourneyData = {
-            ...data,
-            journey: { ...data.journey, startDate: today },
-            checkIns: [],
-            scars: [],
-            unlockedMilestones: [],
-            stats: {
-              currentStreak: 0,
-              longestStreak: 0,
-              totalCheckIns: 0,
-              totalMissed: 0,
-              recoveries: 0,
-              journeyDaysOld: 0,
-              scarCount: 0,
-              lastCheckInDate: null,
-              environmentState: "stable",
-              companionState: "hopeful",
-              missedDays: 0,
+          return {
+            journeys: {
+              ...state.journeys,
+              [journeyId]: {
+                ...data,
+                journey: { ...data.journey, startDate: todayString() },
+                checkIns: [],
+                scars: [],
+                unlockedMilestones: [],
+              },
             },
           };
-          return { journeys: { ...state.journeys, [journeyId]: fresh } };
         });
       },
     }),
