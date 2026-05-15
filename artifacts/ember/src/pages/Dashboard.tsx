@@ -9,6 +9,7 @@ import { CheckInPanel } from "@/components/CheckInPanel";
 import { MilestoneToast } from "@/components/MilestoneToast";
 import { todayString } from "@/lib/utils/date";
 import { ENVIRONMENT_STATES } from "@/lib/config/environment-states";
+import { environmentPalette } from "@/lib/config/tokens";
 
 type Tab = "home" | "milestones" | "history";
 
@@ -24,6 +25,7 @@ export function Dashboard() {
   const { journey, stats, checkIns, scars, unlockedMilestones } = data;
   const checkedInToday = checkIns.some((c) => c.date === todayString());
   const envConfig = ENVIRONMENT_STATES[stats.environmentState];
+  const pageBg = environmentPalette[stats.environmentState].pageBg;
 
   function handleSimulateMiss() {
     if (simulating) return;
@@ -35,15 +37,6 @@ export function Dashboard() {
   function handleReset() {
     resetJourney(journey.id);
   }
-
-  const ENV_BG: Record<string, string> = {
-    thriving:   "#050F05",
-    stable:     "#050810",
-    struggling: "#100804",
-    critical:   "#100404",
-    dormant:    "#060606",
-  };
-  const pageBg = ENV_BG[stats.environmentState] ?? "#080808";
 
   return (
     <div

@@ -69,6 +69,16 @@ export const ENVIRONMENT_STATES: Record<EnvironmentState, EnvironmentStateConfig
   },
 };
 
+/**
+ * Derives the environment state from streak and missed-day counts.
+ *
+ * Thresholds match the EnvironmentStateConfig values above:
+ *   - dormant:   missedDays > 7
+ *   - critical:  missedDays 4–7
+ *   - struggling: missedDays 2–3  OR  streak 1–2 (with 0 missed)
+ *   - stable:    streak 3–6 (with ≤ 1 missed)
+ *   - thriving:  streak ≥ 7 (with 0 missed)
+ */
 export function computeEnvironmentState(
   currentStreak: number,
   missedDays: number
@@ -76,9 +86,10 @@ export function computeEnvironmentState(
   if (missedDays > 7) return "dormant";
   if (missedDays > 3) return "critical";
   if (missedDays > 1) return "struggling";
+  // missedDays is 0 or 1 beyond this point
   if (currentStreak >= 7) return "thriving";
   if (currentStreak >= 3) return "stable";
-  if (currentStreak >= 1) return "stable";
-  if (missedDays === 1) return "struggling";
-  return "critical";
+  if (currentStreak >= 1) return "struggling";
+  // streak is 0: last check-in was exactly 1 day ago (missedDays === 1)
+  return "struggling";
 }

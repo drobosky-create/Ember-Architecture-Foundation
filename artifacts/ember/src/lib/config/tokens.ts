@@ -1,3 +1,6 @@
+import type { EnvironmentState } from "./environment-states";
+import type { CompanionState } from "./companion-states";
+
 export const colors = {
   brand: {
     ember: "#E8613A",
@@ -6,45 +9,6 @@ export const colors = {
     coal: "#1A1208",
     ash: "#2E2416",
     smoke: "#3D3020",
-  },
-  environment: {
-    thriving: {
-      bg: "#1A2E1A",
-      accent: "#4CAF50",
-      sky: "#2E4A2E",
-      text: "#A8D5AA",
-    },
-    stable: {
-      bg: "#1A1E2E",
-      accent: "#5B7FA6",
-      sky: "#1E2A3A",
-      text: "#A0B8D4",
-    },
-    struggling: {
-      bg: "#2E1E0A",
-      accent: "#C8874A",
-      sky: "#3A2010",
-      text: "#D4B48A",
-    },
-    critical: {
-      bg: "#2A0A0A",
-      accent: "#C84A4A",
-      sky: "#3A1010",
-      text: "#D4888A",
-    },
-    dormant: {
-      bg: "#0F0F0F",
-      accent: "#444444",
-      sky: "#1A1A1A",
-      text: "#888888",
-    },
-  },
-  companion: {
-    present: "#A8D5AA",
-    hopeful: "#FFD580",
-    worried: "#FF9B6A",
-    grieving: "#9B9BB8",
-    dormant: "#555555",
   },
   neutral: {
     0: "#FFFFFF",
@@ -67,6 +31,65 @@ export const colors = {
     info: "#2196F3",
   },
 } as const;
+
+export interface EnvironmentPaletteEntry {
+  pageBg: string;
+  cardBg: string;
+  border: string;
+  text: string;
+  glow: string;
+}
+
+export const environmentPalette: Record<EnvironmentState, EnvironmentPaletteEntry> = {
+  thriving: {
+    pageBg: "#050F05",
+    cardBg: "#0D1F0D",
+    border: "#2E5A2E",
+    text: "#A8D5AA",
+    glow: "0 0 30px rgba(76,175,80,0.25)",
+  },
+  stable: {
+    pageBg: "#050810",
+    cardBg: "#0D1220",
+    border: "#1E3A5A",
+    text: "#A0B8D4",
+    glow: "0 0 30px rgba(91,127,166,0.25)",
+  },
+  struggling: {
+    pageBg: "#100804",
+    cardBg: "#1E1004",
+    border: "#4A3010",
+    text: "#D4B48A",
+    glow: "0 0 30px rgba(200,135,74,0.25)",
+  },
+  critical: {
+    pageBg: "#100404",
+    cardBg: "#1A0404",
+    border: "#4A1010",
+    text: "#D48A8A",
+    glow: "0 0 30px rgba(200,74,74,0.25)",
+  },
+  dormant: {
+    pageBg: "#060606",
+    cardBg: "#0A0A0A",
+    border: "#222222",
+    text: "#666666",
+    glow: "none",
+  },
+};
+
+export interface CompanionPaletteEntry {
+  color: string;
+  bg: string;
+}
+
+export const companionPalette: Record<CompanionState, CompanionPaletteEntry> = {
+  present:  { color: "#A8D5AA", bg: "rgba(168,213,170,0.08)" },
+  hopeful:  { color: "#FFD580", bg: "rgba(255,213,128,0.08)" },
+  worried:  { color: "#FF9B6A", bg: "rgba(255,155,106,0.08)" },
+  grieving: { color: "#9B9BB8", bg: "rgba(155,155,184,0.08)" },
+  dormant:  { color: "#555555", bg: "rgba(85,85,85,0.08)" },
+};
 
 export const typography = {
   fontFamily: {
