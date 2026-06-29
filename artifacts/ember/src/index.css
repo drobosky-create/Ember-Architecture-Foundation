@@ -1,17 +1,16 @@
 @import "tailwindcss";
 
+/*
+ * Bootstrap colors. These two values are the ONLY place styling is declared
+ * outside `lib/config/tokens.ts`, because CSS cannot import the TS token
+ * module and the page background must paint before React mounts (no FOUC).
+ * They mirror `colors.neutral[950]` (#080808) and `colors.foreground`
+ * (#F0E8E0) — keep them in sync with tokens.ts. Everything else references
+ * these via var(--color-*) rather than re-hardcoding the hex.
+ */
 @theme inline {
   --color-background: #080808;
   --color-foreground: #F0E8E0;
-}
-
-:root {
-  --ember: #E8613A;
-  --ember-dim: #B84B2A;
-  --ember-glow: #FF8A5B;
-  --coal: #1A1208;
-  --ash: #2E2416;
-  --smoke: #3D3020;
 }
 
 @layer base {
@@ -26,8 +25,8 @@
   }
 
   body {
-    background: #080808;
-    color: #F0E8E0;
+    background: var(--color-background);
+    color: var(--color-foreground);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

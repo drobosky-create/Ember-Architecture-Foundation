@@ -6,6 +6,8 @@ export const colors = {
     ember: "#E8613A",
     emberDim: "#B84B2A",
     emberGlow: "#FF8A5B",
+    /** Near-white text that sits on the ember gradient/fill. */
+    onEmber: "#FFF8F4",
     coal: "#1A1208",
     ash: "#2E2416",
     smoke: "#3D3020",
@@ -23,6 +25,7 @@ export const colors = {
     800: "#1A1A1A",
     900: "#0F0F0F",
     950: "#080808",
+    black: "#000000",
   },
   semantic: {
     success: "#4CAF50",
@@ -30,7 +33,48 @@ export const colors = {
     error: "#F44336",
     info: "#2196F3",
   },
+  /**
+   * Global text color on the dark UI. Mirrored as the `--color-foreground`
+   * bootstrap value in `index.css` (CSS can't import this module).
+   */
+  foreground: "#F0E8E0",
+  /** Opaque page/sheet backgrounds used outside the environment palette. */
+  surface: {
+    night: "#0A0804",   // CreateJourney page background
+    panel: "#121008",   // CheckInPanel bottom sheet
+    toast: "#1E140A",   // MilestoneToast background base
+  },
+  /** Accent colors for milestones, scars and the prototype controls. */
+  accent: {
+    recovery: "#FFD580",   // recovery-type milestones (also companion "hopeful")
+    symbolic: "#9B9BB8",   // symbolic-type milestones (also companion "grieving")
+    temporal: "#A0D4FF",   // temporal-type milestones
+    danger: "#C84A4A",     // scar / broken-streak red
+    dangerText: "#D48A8A", // scar text (also env "critical" text)
+    parchment: "#D4B090",  // check-in history date text
+    caution: "#FFC832",    // prototype-controls warning yellow
+  },
+  /** Solid muted greys used for inactive/secondary glyphs and labels. */
+  muted: {
+    light: "#A0A0A0",  // longest streak / totals stat values
+    mid: "#666666",    // locked milestone label
+    dim: "#555555",    // inactive glyph / zero-streak value
+    faint: "#444444",  // locked milestone description
+  },
 } as const;
+
+/**
+ * Build a translucent color from a 6-digit hex token and an opacity (0–1).
+ * Lets components reference a token color at any alpha without hardcoding
+ * `rgba(...)` literals — e.g. `alpha(colors.brand.ember, 0.15)`.
+ */
+export function alpha(hex: string, opacity: number): string {
+  const h = hex.replace("#", "");
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
 
 export interface EnvironmentPaletteEntry {
   pageBg: string;
@@ -166,6 +210,10 @@ export const shadows = {
     red: "0 0 20px rgba(200,74,74,0.4)",
   },
   inset: "inset 0 2px 8px rgba(0,0,0,0.5)",
+  /** Drop shadow under the primary ember "Check In" buttons. */
+  emberButton: "0 4px 20px rgba(232,97,58,0.4)",
+  /** Elevated milestone toast shadow (depth + ember halo). */
+  toast: "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(232,97,58,0.3)",
 } as const;
 
 export const borderRadius = {

@@ -9,7 +9,7 @@ import { CheckInPanel } from "@/components/CheckInPanel";
 import { MilestoneToast } from "@/components/MilestoneToast";
 import { todayString } from "@/lib/utils/date";
 import { ENVIRONMENT_STATES } from "@/lib/config/environment-states";
-import { environmentPalette } from "@/lib/config/tokens";
+import { environmentPalette, colors, typography, spacing, borderRadius, shadows, alpha } from "@/lib/config/tokens";
 import { computeJourneyStats } from "@/lib/utils/engine";
 
 type Tab = "home" | "milestones" | "history";
@@ -70,24 +70,24 @@ export function Dashboard() {
 
       <header
         style={{
-          padding: "20px 20px 0",
+          padding: `${spacing[5]} ${spacing[5]} 0`,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
         }}
       >
         <div>
-          <div style={{ fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "#E8613A", opacity: 0.8, marginBottom: "2px" }}>
+          <div style={{ fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: colors.brand.ember, opacity: 0.8, marginBottom: "2px" }}>
             EMBER
           </div>
-          <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 600, color: "#F0E8E0" }}>
+          <h2 style={{ margin: 0, fontSize: typography.fontSize.lg, fontWeight: typography.fontWeight.semibold, color: colors.foreground }}>
             {journey.name}
           </h2>
         </div>
         <div
           style={{
-            fontSize: "24px",
-            color: "#E8613A",
+            fontSize: typography.fontSize["2xl"],
+            color: colors.brand.ember,
             opacity: stats.currentStreak > 0 ? 1 : 0.3,
           }}
           className={stats.currentStreak > 0 ? "anim-pulse" : ""}
@@ -96,21 +96,21 @@ export function Dashboard() {
         </div>
       </header>
 
-      <nav style={{ display: "flex", gap: "4px", padding: "16px 20px 0" }}>
+      <nav style={{ display: "flex", gap: spacing[1], padding: `${spacing[4]} ${spacing[5]} 0` }}>
         {(["home", "milestones", "history"] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             style={{
               flex: 1,
-              padding: "8px",
-              background: tab === t ? "rgba(232,97,58,0.15)" : "transparent",
-              border: `1px solid ${tab === t ? "rgba(232,97,58,0.35)" : "rgba(255,255,255,0.08)"}`,
-              borderRadius: "8px",
-              color: tab === t ? "#E8613A" : "rgba(255,255,255,0.35)",
+              padding: spacing[2],
+              background: tab === t ? alpha(colors.brand.ember, 0.15) : "transparent",
+              border: `1px solid ${tab === t ? alpha(colors.brand.ember, 0.35) : alpha(colors.neutral[0], 0.08)}`,
+              borderRadius: borderRadius.md,
+              color: tab === t ? colors.brand.ember : alpha(colors.neutral[0], 0.35),
               fontSize: "11px",
               fontFamily: "inherit",
-              fontWeight: tab === t ? 600 : 400,
+              fontWeight: tab === t ? typography.fontWeight.semibold : typography.fontWeight.regular,
               letterSpacing: "0.06em",
               textTransform: "uppercase",
               cursor: "pointer",
@@ -126,10 +126,10 @@ export function Dashboard() {
         style={{
           flex: 1,
           overflowY: "auto",
-          padding: "16px 20px",
+          padding: `${spacing[4]} ${spacing[5]}`,
           display: "flex",
           flexDirection: "column",
-          gap: "12px",
+          gap: spacing[3],
         }}
       >
         {tab === "home" && (
@@ -146,40 +146,40 @@ export function Dashboard() {
             {journey.intention && (
               <div style={{
                 padding: "14px 16px",
-                background: "rgba(255,255,255,0.03)",
-                borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.06)",
+                background: alpha(colors.neutral[0], 0.03),
+                borderRadius: borderRadius.lg,
+                border: `1px solid ${alpha(colors.neutral[0], 0.06)}`,
               }}>
-                <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: "6px" }}>
+                <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: alpha(colors.neutral[0], 0.3), marginBottom: "6px" }}>
                   Your intention
                 </div>
-                <p style={{ margin: 0, fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: 1.6, fontStyle: "italic" }}>
+                <p style={{ margin: 0, fontSize: "13px", color: alpha(colors.neutral[0], 0.55), lineHeight: 1.6, fontStyle: "italic" }}>
                   &ldquo;{journey.intention}&rdquo;
                 </p>
               </div>
             )}
 
             <div style={{
-              marginTop: "4px",
+              marginTop: spacing[1],
               padding: "12px 14px",
-              background: "rgba(255,200,50,0.05)",
-              border: "1px solid rgba(255,200,50,0.15)",
-              borderRadius: "12px",
+              background: alpha(colors.accent.caution, 0.05),
+              border: `1px solid ${alpha(colors.accent.caution, 0.15)}`,
+              borderRadius: borderRadius.lg,
             }}>
-              <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,200,50,0.6)", marginBottom: "8px" }}>
+              <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: alpha(colors.accent.caution, 0.6), marginBottom: spacing[2] }}>
                 Prototype Controls
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[2] }}>
                 <button
                   onClick={handleSimulateMiss}
                   disabled={simulating}
                   style={{
                     padding: "8px 14px",
-                    background: "rgba(200,74,74,0.15)",
-                    border: "1px solid rgba(200,74,74,0.3)",
-                    borderRadius: "8px",
-                    color: "#D48A8A",
-                    fontSize: "12px",
+                    background: alpha(colors.accent.danger, 0.15),
+                    border: `1px solid ${alpha(colors.accent.danger, 0.3)}`,
+                    borderRadius: borderRadius.md,
+                    color: colors.accent.dangerText,
+                    fontSize: typography.fontSize.xs,
                     fontFamily: "inherit",
                     cursor: "pointer",
                   }}
@@ -190,11 +190,11 @@ export function Dashboard() {
                   onClick={handleReset}
                   style={{
                     padding: "8px 14px",
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "8px",
-                    color: "rgba(255,255,255,0.4)",
-                    fontSize: "12px",
+                    background: alpha(colors.neutral[0], 0.04),
+                    border: `1px solid ${alpha(colors.neutral[0], 0.1)}`,
+                    borderRadius: borderRadius.md,
+                    color: alpha(colors.neutral[0], 0.4),
+                    fontSize: typography.fontSize.xs,
                     fontFamily: "inherit",
                     cursor: "pointer",
                   }}
@@ -213,12 +213,12 @@ export function Dashboard() {
         {tab === "history" && (
           <>
             <ScarList scars={scars} />
-            <div style={{ marginTop: "8px" }}>
-              <div style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "8px" }}>
+            <div style={{ marginTop: spacing[2] }}>
+              <div style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: alpha(colors.neutral[0], 0.35), marginBottom: spacing[2] }}>
                 Check-in History
               </div>
               {checkIns.length === 0 && (
-                <div style={{ padding: "16px", textAlign: "center", color: "rgba(255,255,255,0.25)", fontSize: "13px" }}>
+                <div style={{ padding: spacing[4], textAlign: "center", color: alpha(colors.neutral[0], 0.25), fontSize: "13px" }}>
                   No check-ins yet.
                 </div>
               )}
@@ -230,26 +230,26 @@ export function Dashboard() {
                       key={c.id}
                       style={{
                         padding: "10px 14px",
-                        background: "rgba(232,97,58,0.06)",
-                        border: "1px solid rgba(232,97,58,0.15)",
+                        background: alpha(colors.brand.ember, 0.06),
+                        border: `1px solid ${alpha(colors.brand.ember, 0.15)}`,
                         borderRadius: "10px",
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
                       }}
                     >
-                      <div style={{ fontSize: "13px", color: "#E8613A" }}>◈</div>
-                      <div style={{ flex: 1, padding: "0 12px" }}>
-                        <div style={{ fontSize: "13px", color: "#D4B090" }}>
+                      <div style={{ fontSize: "13px", color: colors.brand.ember }}>◈</div>
+                      <div style={{ flex: 1, padding: `0 ${spacing[3]}` }}>
+                        <div style={{ fontSize: "13px", color: colors.accent.parchment }}>
                           {c.date === todayString() ? "Today" : c.date}
                         </div>
                         {c.note && (
-                          <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", marginTop: "2px" }}>
+                          <div style={{ fontSize: typography.fontSize.xs, color: alpha(colors.neutral[0], 0.35), marginTop: "2px" }}>
                             {c.note}
                           </div>
                         )}
                       </div>
-                      <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)" }}>✓</div>
+                      <div style={{ fontSize: typography.fontSize.xs, color: alpha(colors.neutral[0], 0.2) }}>✓</div>
                     </div>
                   ))}
               </div>
@@ -258,29 +258,27 @@ export function Dashboard() {
         )}
       </div>
 
-      <div style={{ padding: "16px 20px 32px" }}>
+      <div style={{ padding: `${spacing[4]} ${spacing[5]} ${spacing[8]}` }}>
         <button
           onClick={() => setShowCheckIn(true)}
           disabled={checkedInToday}
           style={{
             width: "100%",
-            padding: "16px",
+            padding: spacing[4],
             background: checkedInToday
-              ? "rgba(255,255,255,0.05)"
-              : "linear-gradient(135deg, #E8613A, #B84B2A)",
+              ? alpha(colors.neutral[0], 0.05)
+              : `linear-gradient(135deg, ${colors.brand.ember}, ${colors.brand.emberDim})`,
             border: checkedInToday
-              ? "1px solid rgba(255,255,255,0.08)"
+              ? `1px solid ${alpha(colors.neutral[0], 0.08)}`
               : "none",
             borderRadius: "14px",
-            color: checkedInToday ? "rgba(255,255,255,0.25)" : "#FFF8F4",
+            color: checkedInToday ? alpha(colors.neutral[0], 0.25) : colors.brand.onEmber,
             fontSize: "15px",
-            fontWeight: 600,
+            fontWeight: typography.fontWeight.semibold,
             fontFamily: "inherit",
             cursor: checkedInToday ? "not-allowed" : "pointer",
             letterSpacing: "0.02em",
-            boxShadow: checkedInToday
-              ? "none"
-              : "0 4px 20px rgba(232,97,58,0.4)",
+            boxShadow: checkedInToday ? shadows.none : shadows.emberButton,
             transition: "all 0.2s",
           }}
         >
