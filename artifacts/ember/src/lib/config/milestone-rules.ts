@@ -1,3 +1,5 @@
+import type { JourneyStats } from "@/lib/state/types";
+
 export type MilestoneId =
   | "first_flame"
   | "three_day_ember"
@@ -22,15 +24,21 @@ export interface Milestone {
   unlockMessage: string;
 }
 
-export interface MilestoneStats {
-  currentStreak: number;
-  longestStreak: number;
-  totalCheckIns: number;
-  totalMissed: number;
-  recoveries: number;
-  journeyDaysOld: number;
-  scarCount: number;
-}
+/**
+ * The subset of JourneyStats that milestone conditions read. Derived from
+ * JourneyStats via Pick (not redeclared) so the two can never drift apart —
+ * a JourneyStats can be passed directly wherever MilestoneStats is expected.
+ */
+export type MilestoneStats = Pick<
+  JourneyStats,
+  | "currentStreak"
+  | "longestStreak"
+  | "totalCheckIns"
+  | "totalMissed"
+  | "recoveries"
+  | "journeyDaysOld"
+  | "scarCount"
+>;
 
 export const MILESTONES: Record<MilestoneId, Milestone> = {
   first_flame: {
@@ -101,7 +109,7 @@ export const MILESTONES: Record<MilestoneId, Milestone> = {
     type: "recovery",
     label: "Resilience Mark",
     description: "You have recovered from a missed streak twice.",
-    glyph: "◈",
+    glyph: "✦",
     condition: (s) => s.recoveries >= 2,
     unlockMessage: "Twice you returned. Resilience is your nature.",
   },
@@ -110,7 +118,7 @@ export const MILESTONES: Record<MilestoneId, Milestone> = {
     type: "temporal",
     label: "Century",
     description: "One hundred check-ins total.",
-    glyph: "◉",
+    glyph: "⊙",
     condition: (s) => s.totalCheckIns >= 100,
     unlockMessage: "One hundred moments of choosing yourself.",
   },

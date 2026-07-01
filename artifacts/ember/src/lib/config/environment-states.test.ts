@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { computeEnvironmentState } from "./environment-states";
+import { computeEnvironmentState, ENVIRONMENT_STATES } from "./environment-states";
 
 describe("computeEnvironmentState", () => {
   it("is thriving at streak >= 7 with no/low missed days", () => {
@@ -40,5 +40,32 @@ describe("computeEnvironmentState", () => {
     expect(computeEnvironmentState(7, 1)).toBe("thriving");
     expect(computeEnvironmentState(3, 1)).toBe("stable");
     expect(computeEnvironmentState(0, 1)).toBe("struggling");
+  });
+});
+
+// computeEnvironmentState now derives its thresholds from ENVIRONMENT_STATES,
+// so these guard that the config and the logic stay in agreement.
+describe("ENVIRONMENT_STATES config ↔ computeEnvironmentState", () => {
+  it("has contiguous streak bands (each tier's max + 1 = next tier's min)", () => {
+    expect(ENVIRONMENT_STATES.struggling.streakMax! + 1).toBe(ENVIRONMENT_STATES.stable.streakMin);
+    expect(ENVIRONMENT_STATES.stable.streakMax! + 1).toBe(ENVIRONMENT_STATES.thriving.streakMin);
+  });
+
+  it("has monotonically increasing missed-day tolerance", () => {
+    const { thriving, stable, struggling, critical, dormant } = ENVIRONMENT_STATES;
+    expect(thriving.missedDaysMax).toBeLessThan(stable.missedDaysMax);
+    expect(stable.missedDaysMax).toBeLessThan(struggling.missedDaysMax);
+    expect(struggling.missedDaysMax).toBeLessThan(critical.missedDaysMax);
+    expect(critical.missedDaysMax).toBeLessThan(dormant.missedDaysMax);
+  });
+
+  it("resolves both ends of each streak band to its declared state (0 missed days)", () => {
+    for (const id of ["struggling", "stable", "thriving"] as const) {
+      const { streakMin, streakMax } = ENVIRONMENT_STATES[id];
+      expect(computeEnvironmentState(streakMin, 0)).toBe(id);
+      if (streakMax !== null) {
+        expect(computeEnvironmentState(streakMax, 0)).toBe(id);
+      }
+    }
   });
 });

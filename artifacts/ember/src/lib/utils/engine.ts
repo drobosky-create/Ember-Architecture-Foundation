@@ -1,9 +1,6 @@
 import { computeEnvironmentState } from "@/lib/config/environment-states";
 import { computeCompanionState } from "@/lib/config/companion-states";
-import {
-  computeUnlockedMilestones,
-  type MilestoneStats,
-} from "@/lib/config/milestone-rules";
+import { computeUnlockedMilestones } from "@/lib/config/milestone-rules";
 import type {
   CheckIn,
   JourneyData,
@@ -111,18 +108,10 @@ export function checkForNewMilestones(
   stats: JourneyStats,
   alreadyUnlocked: UnlockedMilestone[]
 ): UnlockedMilestone[] {
-  const milestoneStats: MilestoneStats = {
-    currentStreak: stats.currentStreak,
-    longestStreak: stats.longestStreak,
-    totalCheckIns: stats.totalCheckIns,
-    totalMissed: stats.totalMissed,
-    recoveries: stats.recoveries,
-    journeyDaysOld: stats.journeyDaysOld,
-    scarCount: stats.scarCount,
-  };
-
+  // JourneyStats is a superset of MilestoneStats, so it satisfies the
+  // parameter directly — no remapping needed.
   const alreadyIds = alreadyUnlocked.map((m) => m.id);
-  const newIds = computeUnlockedMilestones(milestoneStats, alreadyIds);
+  const newIds = computeUnlockedMilestones(stats, alreadyIds);
   const now = new Date().toISOString();
   return newIds.map((id) => ({ id, unlockedAt: now }));
 }
