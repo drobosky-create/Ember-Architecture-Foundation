@@ -12,10 +12,15 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
   const [confirmed, setConfirmed] = useState(false);
   const checkIn = useJourneyStore((s) => s.checkIn);
 
-  function handleSubmit() {
-    checkIn(journeyId, note);
-    setConfirmed(true);
-    setTimeout(() => onClose(), 1400);
+  async function handleSubmit() {
+    if (confirmed) return;
+    try {
+      await checkIn(journeyId, note);
+      setConfirmed(true);
+      setTimeout(() => onClose(), 1400);
+    } catch (err) {
+      console.error("Check-in failed", err);
+    }
   }
 
   return (

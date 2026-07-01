@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { ClerkProvider } from "@clerk/clerk-react";
+import { setBaseUrl } from "@workspace/api-client-react";
 import App from "./App";
 import { colors } from "@/lib/config/tokens";
 import "./index.css";
@@ -10,6 +11,9 @@ if (!publishableKey) {
     "Missing VITE_CLERK_PUBLISHABLE_KEY — add it to the root .env.",
   );
 }
+
+// Point the generated API client at the api-server (Clerk token is wired in App).
+setBaseUrl(import.meta.env.VITE_API_BASE_URL ?? "/api");
 
 // Match Clerk's prebuilt UI to the ember dark theme (tokens stay the source).
 const appearance = {

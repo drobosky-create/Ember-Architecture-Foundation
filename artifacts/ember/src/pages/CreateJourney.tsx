@@ -9,13 +9,20 @@ interface Props {
 export function CreateJourney({ onCreated }: Props) {
   const [name, setName] = useState("");
   const [intention, setIntention] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const createJourney = useJourneyStore((s) => s.createJourney);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return;
-    createJourney(name.trim(), intention.trim());
-    onCreated();
+    if (!name.trim() || submitting) return;
+    setSubmitting(true);
+    try {
+      await createJourney(name.trim(), intention.trim());
+      onCreated();
+    } catch (err) {
+      console.error("Failed to create journey", err);
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -146,7 +153,7 @@ export function CreateJourney({ onCreated }: Props) {
 
         <button
           type="submit"
-          disabled={!name.trim()}
+          disabled={!name.trim() || submitting}
           style={{
             marginTop: spacing[2],
             padding: spacing[4],
@@ -157,12 +164,13 @@ export function CreateJourney({ onCreated }: Props) {
             fontSize: typography.fontSize.input,
             fontWeight: typography.fontWeight.semibold,
             fontFamily: "inherit",
-            cursor: name.trim() ? "pointer" : "not-allowed",
+            cursor: name.trim() && !submitting ? "pointer" : "not-allowed",
+            opacity: submitting ? 0.7 : 1,
             transition: "all 0.2s",
             letterSpacing: "0.02em",
           }}
         >
-          Light the Ember
+          {submitting ? "Lighting…" : "Light the Ember"}
         </button>
       </form>
     </div>
