@@ -72,24 +72,30 @@ export const ENVIRONMENT_STATES: Record<EnvironmentState, EnvironmentStateConfig
 /**
  * Derives the environment state from streak and missed-day counts.
  *
- * Thresholds match the EnvironmentStateConfig values above:
- *   - dormant:   missedDays > 7
- *   - critical:  missedDays 4–7
- *   - struggling: missedDays 2–3  OR  streak 1–2 (with 0 missed)
- *   - stable:    streak 3–6 (with ≤ 1 missed)
- *   - thriving:  streak ≥ 7 (with 0 missed)
+ * All thresholds are read from the ENVIRONMENT_STATES config above so the
+ * logic and the data can never disagree. The resulting behaviour is:
+ *   - dormant:    missedDays > 7   (critical.missedDaysMax)
+ *   - critical:   missedDays 4–7   (> struggling.missedDaysMax)
+ *   - struggling: missedDays 2–3   (> stable.missedDaysMax)  OR  streak 1–2
+ *   - stable:     streak 3–6       (with ≤ 1 missed)
+ *   - thriving:   streak ≥ 7       (with ≤ 1 missed)
  */
 export function computeEnvironmentState(
   currentStreak: number,
   missedDays: number
 ): EnvironmentState {
-  if (missedDays > 7) return "dormant";
-  if (missedDays > 3) return "critical";
-  if (missedDays > 1) return "struggling";
-  // missedDays is 0 or 1 beyond this point
-  if (currentStreak >= 7) return "thriving";
-  if (currentStreak >= 3) return "stable";
-  if (currentStreak >= 1) return "struggling";
-  // streak is 0: last check-in was exactly 1 day ago (missedDays === 1)
+  const S = ENVIRONMENT_STATES;
+
+  // Missed days take priority: exceeding a tier's tolerance drops below it.
+  if (missedDays > S.critical.missedDaysMax) return "dormant";
+  if (missedDays > S.struggling.missedDaysMax) return "critical";
+  if (missedDays > S.stable.missedDaysMax) return "struggling";
+
+  // With missed days in range (0–1), the streak picks the tier by its floor.
+  if (currentStreak >= S.thriving.streakMin) return "thriving";
+  if (currentStreak >= S.stable.streakMin) return "stable";
+  if (currentStreak >= S.struggling.streakMin) return "struggling";
+
+  // streak is 0 with ≤ 1 missed day (e.g. last check-in was yesterday).
   return "struggling";
 }

@@ -92,4 +92,9 @@ describe("computeUnlockedMilestones", () => {
       expect(m.id).toBe(id);
     }
   });
+
+  it("gives every milestone a unique glyph", () => {
+    const glyphs = Object.values(MILESTONES).map((m) => m.glyph);
+    expect(new Set(glyphs).size).toBe(glyphs.length);
+  });
 });
