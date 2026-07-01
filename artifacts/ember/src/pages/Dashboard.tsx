@@ -124,7 +124,7 @@ export function Dashboard() {
       >
         {tab === "home" && (
           <>
-            <EnvironmentDisplay state={stats.environmentState} />
+            <EnvironmentDisplay state={stats.environmentState} scarCount={stats.scarCount} />
             <CompanionDisplay state={stats.companionState} />
             <StreakDisplay
               current={stats.currentStreak}

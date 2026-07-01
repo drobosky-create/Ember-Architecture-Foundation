@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <!--
+    Companion Mark — GRIEVING state
+    Same coal polygon. Core barely alive, red-shifted. Almost cold.
+    Emotional read: withdrawn, heavy, still present but barely.
+    CSS vars: --ember-critical, --ember-flame, --ember-glow
+  -->
+  <defs>
+    <radialGradient id="cg-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-critical)" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="var(--ember-critical)" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cg-shell" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-critical)"/>
+      <stop offset="20%"  stop-color="#4A1A10"/>
+      <stop offset="58%"  stop-color="#160806"/>
+      <stop offset="100%" stop-color="#0A0402"/>
+    </radialGradient>
+    <radialGradient id="cg-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-flame-bright)" stop-opacity="0.45"/>
+      <stop offset="45%"  stop-color="var(--ember-critical)"     stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="var(--ember-critical)"     stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cg-halo-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+    <filter id="cg-core-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.0"/>
+    </filter>
+  </defs>
+
+  <g id="glow" filter="url(#cg-halo-blur)">
+    <ellipse cx="30" cy="30" rx="14" ry="12" fill="url(#cg-halo)"/>
+  </g>
+  <g id="companion-body">
+    <polygon
+      points="30,11 37,13 43,17 47,23 47,30 47,37 43,43 37,47 30,49 23,47 17,43 13,37 13,30 13,23 17,17 23,13"
+      fill="url(#cg-shell)"
+      opacity="0.85"
+    />
+  </g>
+  <g id="core" filter="url(#cg-core-blur)">
+    <ellipse cx="30" cy="30" rx="5" ry="4.5" fill="url(#cg-core)"/>
+  </g>
+</svg>

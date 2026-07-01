@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <!--
+    Ember — Horizontal lockup (coal mark)
+    CSS vars: --ember-flame, --ember-flame-bright, --ember-core, --ember-glow, --ember-wordmark
+  -->
+  <defs>
+    <radialGradient id="h-halo" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="var(--ember-glow)"       stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="var(--ember-glow)"       stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="h-shell" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="var(--ember-flame-bright)"/>
+      <stop offset="32%"  stop-color="var(--ember-flame)"/>
+      <stop offset="68%"  stop-color="#2E1406"/>
+      <stop offset="100%" stop-color="#160802"/>
+    </radialGradient>
+    <radialGradient id="h-core" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="var(--ember-core)"/>
+      <stop offset="55%"  stop-color="var(--ember-flame-bright)" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="var(--ember-flame)"        stop-opacity="0"/>
+    </radialGradient>
+    <filter id="h-halo-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <filter id="h-core-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.4"/>
+    </filter>
+  </defs>
+
+  <!-- Coal mark — scaled to 64×64, centered vertically in 80px height -->
+  <g transform="translate(8, 8) scale(0.64)">
+    <g id="glow" filter="url(#h-halo-blur)">
+      <ellipse cx="50" cy="50" rx="36" ry="32" fill="url(#h-halo)"/>
+    </g>
+    <g id="flame">
+      <polygon
+        points="50,18 62,21 72,28 78,38 78,50 78,62 72,72 62,79 50,82 38,79 28,72 22,62 22,50 22,38 28,28 38,21"
+        fill="url(#h-shell)"
+      />
+    </g>
+    <g id="core" filter="url(#h-core-blur)">
+      <ellipse cx="50" cy="50" rx="18" ry="16" fill="url(#h-core)"/>
+    </g>
+  </g>
+
+  <!-- EMBER wordmark — outlined paths, cap height 36px, baseline y=58 -->
+  <g id="wordmark" fill="var(--ember-wordmark)">
+    <!-- E -->
+    <g transform="translate(90, 22)">
+      <rect x="0" y="0" width="5" height="36"/>
+      <rect x="0" y="0" width="22" height="5"/>
+      <rect x="0" y="15.5" width="18" height="5"/>
+      <rect x="0" y="31" width="22" height="5"/>
+    </g>
+    <!-- M -->
+    <g transform="translate(120, 22)">
+      <rect x="0" y="0" width="5" height="36"/>
+      <rect x="21" y="0" width="5" height="36"/>
+      <polygon points="0,0 5,0 15,20 10,20"/>
+      <polygon points="21,0 26,0 16,20 11,20"/>
+    </g>
+    <!-- B -->
+    <g transform="translate(154, 22)">
+      <rect x="0" y="0" width="5" height="36"/>
+      <rect x="0" y="0" width="16" height="5"/>
+      <rect x="0" y="15.5" width="16" height="5"/>
+      <rect x="0" y="31" width="16" height="5"/>
+      <rect x="11" y="5" width="5" height="10.5" rx="2.5"/>
+      <rect x="11" y="20.5" width="5" height="10.5" rx="2.5"/>
+    </g>
+    <!-- E -->
+    <g transform="translate(184, 22)">
+      <rect x="0" y="0" width="5" height="36"/>
+      <rect x="0" y="0" width="22" height="5"/>
+      <rect x="0" y="15.5" width="18" height="5"/>
+      <rect x="0" y="31" width="22" height="5"/>
+    </g>
+    <!-- R -->
+    <g transform="translate(214, 22)">
+      <rect x="0" y="0" width="5" height="36"/>
+      <rect x="0" y="0" width="16" height="5"/>
+      <rect x="0" y="15.5" width="16" height="5"/>
+      <rect x="11" y="5" width="5" height="10.5" rx="2.5"/>
+      <polygon points="5,20.5 10,20.5 22,36 17,36"/>
+    </g>
+  </g>
+</svg>
