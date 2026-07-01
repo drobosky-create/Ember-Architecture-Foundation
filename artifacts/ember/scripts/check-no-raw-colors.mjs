@@ -9,11 +9,8 @@
  * palette from silently drifting wider, which is exactly what the
  * 2026-06-29 audit found.
  *
- * Note: this intentionally does NOT flag raw px/rem spacing. Color is fully
- * tokenized; spacing/typography is only partially tokenized (some inline px
- * values have no exact token equivalent yet), so a px rule would produce
- * false failures. Tightening to px is a future follow-up once the spacing
- * scale covers the remaining values.
+ * Raw px sizing is enforced separately by check-no-raw-px.mjs; run both via
+ * `pnpm run lint:tokens`.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";

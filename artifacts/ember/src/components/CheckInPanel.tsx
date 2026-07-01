@@ -58,13 +58,13 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
         ) : (
           <>
             <div>
-              <div style={{ fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: colors.brand.ember, marginBottom: "6px" }}>
+              <div style={{ fontSize: typography.fontSize["2xs"], letterSpacing: "0.15em", textTransform: "uppercase", color: colors.brand.ember, marginBottom: spacing[1.5] }}>
                 DAILY CHECK-IN
               </div>
               <h3 style={{ margin: 0, fontSize: typography.fontSize.xl, fontWeight: typography.fontWeight.bold, color: colors.foreground }}>
                 You showed up.
               </h3>
-              <p style={{ margin: "6px 0 0", fontSize: "13px", color: alpha(colors.neutral[0], 0.4), lineHeight: typography.lineHeight.normal }}>
+              <p style={{ margin: `${spacing[1.5]} 0 0`, fontSize: typography.fontSize.caption, color: alpha(colors.neutral[0], 0.4), lineHeight: typography.lineHeight.normal }}>
                 Mark today as done. Leave a note for your future self.
               </p>
             </div>
@@ -77,12 +77,12 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
               maxLength={200}
               style={{
                 width: "100%",
-                padding: "14px 16px",
+                padding: `${spacing[3.5]} ${spacing[4]}`,
                 background: alpha(colors.neutral[0], 0.04),
                 border: `1px solid ${alpha(colors.neutral[0], 0.1)}`,
                 borderRadius: borderRadius.lg,
                 color: colors.foreground,
-                fontSize: "15px",
+                fontSize: typography.fontSize.input,
                 outline: "none",
                 fontFamily: "inherit",
                 resize: "none",
@@ -92,12 +92,12 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
               onBlur={(e) => (e.currentTarget.style.borderColor = alpha(colors.neutral[0], 0.1))}
             />
 
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div style={{ display: "flex", gap: spacing[2.5] }}>
               <button
                 onClick={onClose}
                 style={{
                   flex: 1,
-                  padding: "14px",
+                  padding: spacing[3.5],
                   background: "transparent",
                   border: `1px solid ${alpha(colors.neutral[0], 0.1)}`,
                   borderRadius: borderRadius.lg,
@@ -113,7 +113,7 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
                 onClick={handleSubmit}
                 style={{
                   flex: 2,
-                  padding: "14px",
+                  padding: spacing[3.5],
                   background: `linear-gradient(135deg, ${colors.brand.ember}, ${colors.brand.emberDim})`,
                   border: "none",
                   borderRadius: borderRadius.lg,

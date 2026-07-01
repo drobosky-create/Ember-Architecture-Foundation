@@ -142,15 +142,19 @@ export const typography = {
     mono: "'Fira Code', 'Cascadia Code', monospace",
   },
   fontSize: {
-    xs: "0.75rem",
-    sm: "0.875rem",
-    base: "1rem",
-    lg: "1.125rem",
-    xl: "1.25rem",
-    "2xl": "1.5rem",
-    "3xl": "1.875rem",
-    "4xl": "2.25rem",
-    "5xl": "3rem",
+    "2xs": "0.6875rem", // 11px — uppercase eyebrow labels, fine print
+    xs: "0.75rem", // 12px
+    caption: "0.8125rem", // 13px — secondary body text, dates, notes
+    sm: "0.875rem", // 14px
+    input: "0.9375rem", // 15px — form inputs, primary buttons, toast title
+    base: "1rem", // 16px
+    lg: "1.125rem", // 18px
+    xl: "1.25rem", // 20px
+    "2xl": "1.5rem", // 24px
+    display: "1.75rem", // 28px — large stat numbers, page glyph, page H1
+    "3xl": "1.875rem", // 30px
+    "4xl": "2.25rem", // 36px
+    "5xl": "3rem", // 48px
   },
   fontWeight: {
     light: 300,
@@ -175,17 +179,25 @@ export const typography = {
   },
 } as const;
 
+// Numeric keys follow a 4px grid: key N === N * 0.25rem === N * 4px.
+// Quarter/half steps (0.5, 0.75, 1.5, 2.5, 3.5) cover the off-grid values the
+// UI actually uses (2/3/6/10/14px) so nothing has to be hardcoded.
 export const spacing = {
   0: "0",
-  1: "0.25rem",
-  2: "0.5rem",
-  3: "0.75rem",
-  4: "1rem",
-  5: "1.25rem",
-  6: "1.5rem",
-  8: "2rem",
-  10: "2.5rem",
-  12: "3rem",
+  0.5: "0.125rem", // 2px
+  0.75: "0.1875rem", // 3px
+  1: "0.25rem", // 4px
+  1.5: "0.375rem", // 6px
+  2: "0.5rem", // 8px
+  2.5: "0.625rem", // 10px
+  3: "0.75rem", // 12px
+  3.5: "0.875rem", // 14px
+  4: "1rem", // 16px
+  5: "1.25rem", // 20px
+  6: "1.5rem", // 24px
+  8: "2rem", // 32px
+  10: "2.5rem", // 40px
+  12: "3rem", // 48px
   16: "4rem",
   20: "5rem",
   24: "6rem",
@@ -195,6 +207,8 @@ export const spacing = {
   64: "16rem",
   mobileMax: "430px",
   mobileMin: "320px",
+  avatar: "72px", // companion avatar diameter
+  toastMax: "380px", // milestone toast max width
 } as const;
 
 export const shadows = {
@@ -226,6 +240,8 @@ export const borderRadius = {
   "3xl": "32px",
   full: "9999px",
   card: "16px",
+  row: "10px", // list-row cards (milestones, scars, check-in history)
+  button: "14px", // primary action button ("Check In")
   pill: "999px",
   circle: "50%",
 } as const;

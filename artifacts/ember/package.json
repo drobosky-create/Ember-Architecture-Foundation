@@ -9,6 +9,8 @@
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint:colors": "node scripts/check-no-raw-colors.mjs",
+    "lint:px": "node scripts/check-no-raw-px.mjs",
+    "lint:tokens": "pnpm run lint:colors && pnpm run lint:px",
     "test": "vitest run",
     "test:watch": "vitest"
   },
