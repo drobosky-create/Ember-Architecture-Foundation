@@ -1,3 +1,4 @@
+import "./env"; // must be first: loads .env before ./app reads DATABASE_URL
 import app from "./app";
 import { logger } from "./lib/logger";
 

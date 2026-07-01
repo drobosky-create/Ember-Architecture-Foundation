@@ -1,5 +1,6 @@
 import express, { type Express } from "express";
 import cors from "cors";
+import { clerkMiddleware } from "@clerk/express";
 import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
@@ -28,6 +29,10 @@ app.use(
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Attaches Clerk auth to req (reads the session JWT from the Authorization
+// header or cookie). Per-route enforcement is done with requireAuth().
+app.use(clerkMiddleware());
 
 app.use("/api", router);
 

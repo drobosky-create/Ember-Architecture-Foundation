@@ -9,6 +9,7 @@ import { CheckInPanel } from "@/components/CheckInPanel";
 import { MilestoneToast } from "@/components/MilestoneToast";
 import { todayString } from "@/lib/utils/date";
 import { EmberMark } from "@/components/EmberMark";
+import { UserButton } from "@clerk/clerk-react";
 import { environmentPalette, colors, typography, spacing, borderRadius, shadows, alpha } from "@/lib/config/tokens";
 import { computeJourneyStats } from "@/lib/utils/engine";
 
@@ -83,7 +84,10 @@ export function Dashboard() {
             {journey.name}
           </h2>
         </div>
-        <EmberMark state={stats.environmentState} size={28} />
+        <div style={{ display: "flex", alignItems: "center", gap: spacing[3] }}>
+          <EmberMark state={stats.environmentState} size={28} />
+          <UserButton />
+        </div>
       </header>
 
       <nav style={{ display: "flex", gap: spacing[1], padding: `${spacing[4]} ${spacing[5]} 0` }}>

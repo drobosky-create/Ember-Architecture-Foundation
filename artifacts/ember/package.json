@@ -15,7 +15,6 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
-    "vitest": "^3.2.0",
     "@replit/vite-plugin-cartographer": "catalog:",
     "@replit/vite-plugin-dev-banner": "catalog:",
     "@replit/vite-plugin-runtime-error-modal": "catalog:",
@@ -29,9 +28,11 @@
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",
     "vite": "catalog:",
+    "vitest": "^3.2.0",
     "wouter": "^3.3.5"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.61.3",
     "zustand": "^5.0.13"
   }
 }
