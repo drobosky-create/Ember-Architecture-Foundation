@@ -8,7 +8,7 @@ import { ScarList } from "@/components/ScarList";
 import { CheckInPanel } from "@/components/CheckInPanel";
 import { MilestoneToast } from "@/components/MilestoneToast";
 import { todayString } from "@/lib/utils/date";
-import { ENVIRONMENT_STATES } from "@/lib/config/environment-states";
+import { EmberMark } from "@/components/EmberMark";
 import { environmentPalette, colors, typography, spacing, borderRadius, shadows, alpha } from "@/lib/config/tokens";
 import { computeJourneyStats } from "@/lib/utils/engine";
 
@@ -35,7 +35,6 @@ export function Dashboard() {
   const stats = computeJourneyStats(journeyData);
 
   const checkedInToday = checkIns.some((c) => c.date === todayString());
-  const envConfig = ENVIRONMENT_STATES[stats.environmentState];
   const pageBg = environmentPalette[stats.environmentState].pageBg;
 
   function handleSimulateMiss() {
@@ -84,16 +83,7 @@ export function Dashboard() {
             {journey.name}
           </h2>
         </div>
-        <div
-          style={{
-            fontSize: typography.fontSize["2xl"],
-            color: colors.brand.ember,
-            opacity: stats.currentStreak > 0 ? 1 : 0.3,
-          }}
-          className={stats.currentStreak > 0 ? "anim-pulse" : ""}
-        >
-          {envConfig.symbolGlyph}
-        </div>
+        <EmberMark state={stats.environmentState} size={28} />
       </header>
 
       <nav style={{ display: "flex", gap: spacing[1], padding: `${spacing[4]} ${spacing[5]} 0` }}>
@@ -134,7 +124,7 @@ export function Dashboard() {
       >
         {tab === "home" && (
           <>
-            <EnvironmentDisplay state={stats.environmentState} />
+            <EnvironmentDisplay state={stats.environmentState} scarCount={stats.scarCount} />
             <CompanionDisplay state={stats.companionState} />
             <StreakDisplay
               current={stats.currentStreak}

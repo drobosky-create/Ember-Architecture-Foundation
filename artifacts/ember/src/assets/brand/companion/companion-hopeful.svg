@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <!--
+    Companion Mark — HOPEFUL state
+    Same coal polygon. Core warm, glow slightly softer than present.
+    Emotional read: expectant, leaning forward, not yet certain.
+    CSS vars: --ember-flame, --ember-flame-bright, --ember-core, --ember-glow
+  -->
+  <defs>
+    <radialGradient id="ch-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-glow)"       stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="var(--ember-glow)"       stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ch-shell" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-flame-bright)"/>
+      <stop offset="28%"  stop-color="var(--ember-flame)"/>
+      <stop offset="65%"  stop-color="#261004"/>
+      <stop offset="100%" stop-color="#120602"/>
+    </radialGradient>
+    <radialGradient id="ch-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-core)"/>
+      <stop offset="50%"  stop-color="var(--ember-flame-bright)" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="var(--ember-flame)"        stop-opacity="0"/>
+    </radialGradient>
+    <filter id="ch-halo-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <filter id="ch-core-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.4"/>
+    </filter>
+  </defs>
+
+  <g id="glow" filter="url(#ch-halo-blur)">
+    <ellipse cx="30" cy="30" rx="20" ry="18" fill="url(#ch-halo)"/>
+  </g>
+  <g id="companion-body">
+    <polygon
+      points="30,11 37,13 43,17 47,23 47,30 47,37 43,43 37,47 30,49 23,47 17,43 13,37 13,30 13,23 17,17 23,13"
+      fill="url(#ch-shell)"
+    />
+  </g>
+  <g id="core" filter="url(#ch-core-blur)">
+    <ellipse cx="30" cy="30" rx="9" ry="8" fill="url(#ch-core)"/>
+  </g>
+</svg>

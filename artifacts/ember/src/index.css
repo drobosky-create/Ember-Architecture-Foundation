@@ -70,3 +70,42 @@
 .anim-shake { animation: shake 0.5s ease-in-out; }
 .anim-fade  { animation: fade-pulse 3s ease-in-out infinite; }
 .anim-still { opacity: 0.4; }
+
+/* EmberMark: state-driven brand art. Colors come from --ember-* vars set on
+   .ember-mark in the component; the SVG shapes are inlined so the vars cascade. */
+.ember-mark { position: relative; display: inline-block; }
+.ember-mark-body,
+.ember-mark-scars { position: absolute; inset: 0; }
+.ember-mark-scars { pointer-events: none; }
+.ember-mark svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* Scar overlay: reveal seams up to the current scarCount (capped at 3). */
+.ember-mark-scars [id^="scar-"] { display: none; }
+.ember-mark[data-scars="1"] .ember-mark-scars #scar-1,
+.ember-mark[data-scars="2"] .ember-mark-scars #scar-1,
+.ember-mark[data-scars="2"] .ember-mark-scars #scar-2,
+.ember-mark[data-scars="3"] .ember-mark-scars #scar-1,
+.ember-mark[data-scars="3"] .ember-mark-scars #scar-2,
+.ember-mark[data-scars="3"] .ember-mark-scars #scar-3 { display: block; }
+
+@keyframes ember-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.92; transform: scale(1.03); }
+}
+@keyframes ember-flicker {
+  0% { opacity: 1; } 15% { opacity: 0.85; } 30% { opacity: 0.95; }
+  50% { opacity: 0.75; } 70% { opacity: 0.9; } 85% { opacity: 0.7; } 100% { opacity: 1; }
+}
+@keyframes ember-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-1px); } 40% { transform: translateX(1px); }
+  60% { transform: translateX(-1px); } 80% { transform: translateX(0.5px); }
+}
+.ember-pulse-strong { animation: ember-pulse 2.8s ease-in-out infinite; }
+.ember-pulse-slow { animation: ember-pulse 4s ease-in-out infinite; }
+.ember-flicker { animation: ember-flicker 1.6s linear infinite; }
+.ember-flicker-fast { animation: ember-flicker 1.2s linear infinite, ember-shake 1.2s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ember-mark-body { animation: none !important; }
+}

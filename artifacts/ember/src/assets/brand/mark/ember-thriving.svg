@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!--
+    Ember Mark — THRIVING state
+    Coal shell: always the same faceted polygon.
+    Internal light: maximum. Core blazes. Facets catch full glow. Outer halo strong.
+    CSS vars: --ember-flame, --ember-flame-bright, --ember-core, --ember-glow
+  -->
+  <defs>
+    <!-- Outer atmospheric halo -->
+    <radialGradient id="t-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-glow)"       stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="var(--ember-glow)"       stop-opacity="0"/>
+    </radialGradient>
+    <!-- Coal shell fill — facets lit from within -->
+    <radialGradient id="t-shell" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-flame-bright)"/>
+      <stop offset="38%"  stop-color="var(--ember-flame)"/>
+      <stop offset="72%"  stop-color="#3A1A08"/>
+      <stop offset="100%" stop-color="#1A0804"/>
+    </radialGradient>
+    <!-- Core hotspot -->
+    <radialGradient id="t-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="var(--ember-core)"/>
+      <stop offset="60%"  stop-color="var(--ember-flame-bright)" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="var(--ember-flame)"        stop-opacity="0"/>
+    </radialGradient>
+    <filter id="t-halo-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="t-core-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+  </defs>
+
+  <!-- Outer atmospheric halo -->
+  <g id="glow" filter="url(#t-halo-blur)">
+    <ellipse cx="50" cy="50" rx="38" ry="34" fill="url(#t-halo)"/>
+  </g>
+
+  <!-- Coal shell — 12-facet polygon, slightly wider than tall, worn-coin shape -->
+  <g id="flame">
+    <polygon
+      points="
+        50,18  62,21  72,28  78,38
+        78,50  78,62  72,72  62,79
+        50,82  38,79  28,72  22,62
+        22,50  22,38  28,28  38,21
+      "
+      fill="url(#t-shell)"
+    />
+  </g>
+
+  <!-- Inner core glow — diffuse, centered -->
+  <g id="core" filter="url(#t-core-blur)">
+    <ellipse cx="50" cy="50" rx="22" ry="20" fill="url(#t-core)"/>
+  </g>
+</svg>

@@ -6,6 +6,8 @@ export const colors = {
     ember: "#E8613A",
     emberDim: "#B84B2A",
     emberGlow: "#FF8A5B",
+    /** Hottest inner-core point of the ember mark. */
+    emberCore: "#FF9A6C",
     /** Near-white text that sits on the ember gradient/fill. */
     onEmber: "#FFF8F4",
     coal: "#1A1208",
@@ -53,13 +55,15 @@ export const colors = {
     dangerText: "#D48A8A", // scar text (also env "critical" text)
     parchment: "#D4B090",  // check-in history date text
     caution: "#FFC832",    // prototype-controls warning yellow
+    scarSeam: "#D4956A",   // healed-seam color on the ember mark scars
   },
   /** Solid muted greys used for inactive/secondary glyphs and labels. */
   muted: {
     light: "#A0A0A0",  // longest streak / totals stat values
-    mid: "#666666",    // locked milestone label
+    mid: "#666666",    // locked milestone label (also dormant ember shell)
     dim: "#555555",    // inactive glyph / zero-streak value
     faint: "#444444",  // locked milestone description
+    ashLight: "#888888", // dormant ember shell highlight
   },
 } as const;
 

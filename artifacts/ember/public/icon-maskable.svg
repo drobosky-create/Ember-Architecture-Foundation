@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!--
+    Ember — Maskable app icon (coal form, baked colors)
+    Safe zone: inner 80%. Mark centered within safe zone.
+    Full-bleed dark background.
+  -->
+  <defs>
+    <radialGradient id="mask-bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#1A0A05"/>
+      <stop offset="100%" stop-color="#080808"/>
+    </radialGradient>
+    <radialGradient id="mask-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FF8A5B" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FF8A5B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mask-shell" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FF8A5B"/>
+      <stop offset="30%"  stop-color="#E8613A"/>
+      <stop offset="68%"  stop-color="#2E1406"/>
+      <stop offset="100%" stop-color="#0E0602"/>
+    </radialGradient>
+    <radialGradient id="mask-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FF9A6C"/>
+      <stop offset="60%"  stop-color="#FF8A5B" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF8A5B" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="mask-halo-blur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <filter id="mask-core-blur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+
+  <!-- Full-bleed background -->
+  <rect width="512" height="512" fill="url(#mask-bg)"/>
+
+  <!-- Atmospheric halo -->
+  <ellipse cx="256" cy="256" rx="180" ry="162" fill="url(#mask-halo)" filter="url(#mask-halo-blur)"/>
+
+  <!-- Coal polygon — 12-point, centered, within safe zone (approx 82–430) -->
+  <polygon
+    points="
+      256,82  308,97  348,130  368,176
+      368,256 368,336 348,382 308,415
+      256,430 204,415 164,382 144,336
+      144,256 144,176 164,130 204,97
+    "
+    fill="url(#mask-shell)"
+  />
+
+  <!-- Core glow -->
+  <ellipse cx="256" cy="256" rx="90" ry="82" fill="url(#mask-core)" filter="url(#mask-core-blur)"/>
+</svg>

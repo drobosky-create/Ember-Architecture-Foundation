@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!--
+    Ember Mark — SCAR overlay (coal form)
+    Composite on top of any state mark. Healed seams across facet edges.
+    Show scar-1 for scarCount >= 1, scar-2 for >= 2, scar-3 for >= 3.
+    CSS var: --ember-scar
+    Tone: healed, not fresh. A seam along a facet edge, not a wound.
+  -->
+  <defs>
+    <style>
+      .scar { stroke: var(--ember-scar); stroke-linecap: round; fill: none; }
+    </style>
+  </defs>
+
+  <!--
+    SCAR 1 — primary seam: runs along the left-upper facet edge, then cuts inward.
+    Follows the natural geometry of the polygon.
+  -->
+  <g id="scar-1">
+    <!-- Along facet edge upper-left -->
+    <path class="scar" stroke-width="1.0" opacity="0.55"
+      d="M38,21 L28,28 L22,38"/>
+    <!-- Short inward healed knit -->
+    <line class="scar" stroke-width="0.6" opacity="0.35"
+      x1="32" y1="26" x2="36" y2="32"/>
+  </g>
+
+  <!--
+    SCAR 2 — secondary seam: right-lower facet, shorter.
+  -->
+  <g id="scar-2">
+    <path class="scar" stroke-width="0.9" opacity="0.48"
+      d="M72,62 L78,62 L78,50"/>
+    <line class="scar" stroke-width="0.6" opacity="0.30"
+      x1="74" y1="58" x2="70" y2="54"/>
+  </g>
+
+  <!--
+    SCAR 3 — tertiary seam: bottom-center, very faint, short diagonal.
+  -->
+  <g id="scar-3">
+    <path class="scar" stroke-width="0.7" opacity="0.32"
+      d="M50,82 L44,76 L42,68"/>
+  </g>
+</svg>
