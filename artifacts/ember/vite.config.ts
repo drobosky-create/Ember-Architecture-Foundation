@@ -28,6 +28,9 @@ if (!basePath) {
 
 export default defineConfig({
   base: basePath,
+  // Load env from the repo root (single .env). Only VITE_* vars are exposed to
+  // the client; server secrets (CLERK_SECRET_KEY, DATABASE_URL) stay hidden.
+  envDir: path.resolve(import.meta.dirname, "../.."),
   plugins: [
     react(),
     tailwindcss(),
