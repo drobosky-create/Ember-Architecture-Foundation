@@ -1,3 +1,5 @@
+import { colors, typography, spacing, borderRadius, alpha } from "@/lib/config/tokens";
+
 interface Props {
   current: number;
   longest: number;
@@ -16,26 +18,26 @@ export function StreakDisplay({ current, longest, totalCheckIns, missedDays }: P
         label="Current Streak"
         value={current}
         unit="days"
-        color={current > 0 ? "#E8613A" : "#555"}
+        color={current > 0 ? colors.brand.ember : colors.muted.dim}
         highlight
       />
       <StatCard
         label="Longest Streak"
         value={longest}
         unit="days"
-        color="#A0A0A0"
+        color={colors.muted.light}
       />
       <StatCard
         label="Total Check-ins"
         value={totalCheckIns}
         unit=""
-        color="#A0A0A0"
+        color={colors.muted.light}
       />
       <StatCard
         label="Days Missed"
         value={missedDays}
         unit=""
-        color={missedDays > 0 ? "#C84A4A" : "#4CAF50"}
+        color={missedDays > 0 ? colors.accent.danger : colors.semantic.success}
       />
     </div>
   );
@@ -56,27 +58,27 @@ function StatCard({
 }) {
   return (
     <div style={{
-      background: highlight ? `${color}12` : "rgba(255,255,255,0.03)",
-      border: `1px solid ${highlight ? color + "30" : "rgba(255,255,255,0.06)"}`,
-      borderRadius: "12px",
+      background: highlight ? `${color}12` : alpha(colors.neutral[0], 0.03),
+      border: `1px solid ${highlight ? color + "30" : alpha(colors.neutral[0], 0.06)}`,
+      borderRadius: borderRadius.lg,
       padding: "14px",
       textAlign: "center",
     }}>
       <div style={{
         fontSize: "28px",
-        fontWeight: 700,
+        fontWeight: typography.fontWeight.bold,
         color,
         lineHeight: 1,
-        marginBottom: "4px",
+        marginBottom: spacing[1],
       }}>
         {value}
         {unit && (
-          <span style={{ fontSize: "12px", fontWeight: 400, marginLeft: "3px", opacity: 0.7 }}>
+          <span style={{ fontSize: typography.fontSize.xs, fontWeight: typography.fontWeight.regular, marginLeft: "3px", opacity: 0.7 }}>
             {unit}
           </span>
         )}
       </div>
-      <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+      <div style={{ fontSize: "11px", color: alpha(colors.neutral[0], 0.4), letterSpacing: "0.06em", textTransform: "uppercase" }}>
         {label}
       </div>
     </div>

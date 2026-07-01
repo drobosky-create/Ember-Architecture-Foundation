@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useJourneyStore } from "@/lib/state/useJourneyStore";
+import { colors, typography, spacing, borderRadius, alpha } from "@/lib/config/tokens";
 
 interface Props {
   onCreated: () => void;
@@ -21,21 +22,21 @@ export function CreateJourney({ onCreated }: Props) {
     <div
       style={{
         minHeight: "100dvh",
-        background: "#0A0804",
+        background: colors.surface.night,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        padding: "32px 24px",
+        padding: `${spacing[8]} ${spacing[6]}`,
       }}
     >
-      <div style={{ marginBottom: "48px" }}>
+      <div style={{ marginBottom: spacing[12] }}>
         <div
           style={{
             fontSize: "11px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color: "#E8613A",
-            marginBottom: "12px",
+            color: colors.brand.ember,
+            marginBottom: spacing[3],
           }}
         >
           EMBER
@@ -43,19 +44,19 @@ export function CreateJourney({ onCreated }: Props) {
         <h1
           style={{
             fontSize: "28px",
-            fontWeight: 700,
-            color: "#F0E8E0",
-            lineHeight: 1.2,
+            fontWeight: typography.fontWeight.bold,
+            color: colors.foreground,
+            lineHeight: typography.lineHeight.tight,
             margin: 0,
-            marginBottom: "12px",
+            marginBottom: spacing[3],
           }}
         >
           Begin a journey
         </h1>
         <p
           style={{
-            fontSize: "14px",
-            color: "rgba(240,232,224,0.5)",
+            fontSize: typography.fontSize.sm,
+            color: alpha(colors.foreground, 0.5),
             lineHeight: 1.6,
             margin: 0,
           }}
@@ -65,7 +66,7 @@ export function CreateJourney({ onCreated }: Props) {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: spacing[5] }}>
         <div>
           <label
             style={{
@@ -73,8 +74,8 @@ export function CreateJourney({ onCreated }: Props) {
               fontSize: "11px",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.4)",
-              marginBottom: "8px",
+              color: alpha(colors.neutral[0], 0.4),
+              marginBottom: spacing[2],
             }}
           >
             Journey Name
@@ -88,17 +89,17 @@ export function CreateJourney({ onCreated }: Props) {
             style={{
               width: "100%",
               padding: "14px 16px",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: "12px",
-              color: "#F0E8E0",
-              fontSize: "16px",
+              background: alpha(colors.neutral[0], 0.05),
+              border: `1px solid ${alpha(colors.neutral[0], 0.12)}`,
+              borderRadius: borderRadius.lg,
+              color: colors.foreground,
+              fontSize: typography.fontSize.base,
               outline: "none",
               fontFamily: "inherit",
               transition: "border-color 0.2s",
             }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = "#E8613A55")}
-            onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)")}
+            onFocus={(e) => (e.currentTarget.style.borderColor = `${colors.brand.ember}55`)}
+            onBlur={(e) => (e.currentTarget.style.borderColor = alpha(colors.neutral[0], 0.12))}
           />
         </div>
 
@@ -109,8 +110,8 @@ export function CreateJourney({ onCreated }: Props) {
               fontSize: "11px",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.4)",
-              marginBottom: "8px",
+              color: alpha(colors.neutral[0], 0.4),
+              marginBottom: spacing[2],
             }}
           >
             Intention{" "}
@@ -127,19 +128,19 @@ export function CreateJourney({ onCreated }: Props) {
             style={{
               width: "100%",
               padding: "14px 16px",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: "12px",
-              color: "#F0E8E0",
+              background: alpha(colors.neutral[0], 0.05),
+              border: `1px solid ${alpha(colors.neutral[0], 0.12)}`,
+              borderRadius: borderRadius.lg,
+              color: colors.foreground,
               fontSize: "15px",
               outline: "none",
               fontFamily: "inherit",
               resize: "none",
-              lineHeight: 1.5,
+              lineHeight: typography.lineHeight.normal,
               transition: "border-color 0.2s",
             }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = "#E8613A55")}
-            onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)")}
+            onFocus={(e) => (e.currentTarget.style.borderColor = `${colors.brand.ember}55`)}
+            onBlur={(e) => (e.currentTarget.style.borderColor = alpha(colors.neutral[0], 0.12))}
           />
         </div>
 
@@ -147,14 +148,14 @@ export function CreateJourney({ onCreated }: Props) {
           type="submit"
           disabled={!name.trim()}
           style={{
-            marginTop: "8px",
-            padding: "16px",
-            background: name.trim() ? "#E8613A" : "rgba(255,255,255,0.06)",
+            marginTop: spacing[2],
+            padding: spacing[4],
+            background: name.trim() ? colors.brand.ember : alpha(colors.neutral[0], 0.06),
             border: "none",
-            borderRadius: "12px",
-            color: name.trim() ? "#FFF8F4" : "rgba(255,255,255,0.25)",
+            borderRadius: borderRadius.lg,
+            color: name.trim() ? colors.brand.onEmber : alpha(colors.neutral[0], 0.25),
             fontSize: "15px",
-            fontWeight: 600,
+            fontWeight: typography.fontWeight.semibold,
             fontFamily: "inherit",
             cursor: name.trim() ? "pointer" : "not-allowed",
             transition: "all 0.2s",

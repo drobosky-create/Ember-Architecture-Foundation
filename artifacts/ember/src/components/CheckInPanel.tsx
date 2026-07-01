@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useJourneyStore } from "@/lib/state/useJourneyStore";
+import { colors, typography, spacing, borderRadius, shadows, alpha } from "@/lib/config/tokens";
 
 interface Props {
   journeyId: string;
@@ -22,7 +23,7 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(0,0,0,0.85)",
+        background: alpha(colors.neutral.black, 0.85),
         zIndex: 100,
         display: "flex",
         flexDirection: "column",
@@ -35,35 +36,35 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
     >
       <div
         style={{
-          background: "#121008",
-          border: "1px solid rgba(232,97,58,0.2)",
-          borderRadius: "24px 24px 0 0",
-          padding: "32px 24px",
+          background: colors.surface.panel,
+          border: `1px solid ${alpha(colors.brand.ember, 0.2)}`,
+          borderRadius: `${borderRadius["2xl"]} ${borderRadius["2xl"]} 0 0`,
+          padding: `${spacing[8]} ${spacing[6]}`,
           display: "flex",
           flexDirection: "column",
-          gap: "20px",
+          gap: spacing[5],
         }}
       >
         {confirmed ? (
-          <div style={{ textAlign: "center", padding: "24px 0" }}>
-            <div style={{ fontSize: "48px", marginBottom: "12px" }} className="anim-pulse">◈</div>
-            <div style={{ fontSize: "20px", fontWeight: 700, color: "#E8613A", marginBottom: "8px" }}>
+          <div style={{ textAlign: "center", padding: `${spacing[6]} 0` }}>
+            <div style={{ fontSize: typography.fontSize["5xl"], marginBottom: spacing[3] }} className="anim-pulse">◈</div>
+            <div style={{ fontSize: typography.fontSize.xl, fontWeight: typography.fontWeight.bold, color: colors.brand.ember, marginBottom: spacing[2] }}>
               Ember stoked
             </div>
-            <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.45)" }}>
+            <div style={{ fontSize: typography.fontSize.sm, color: alpha(colors.neutral[0], 0.45) }}>
               You showed up today.
             </div>
           </div>
         ) : (
           <>
             <div>
-              <div style={{ fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "#E8613A", marginBottom: "6px" }}>
+              <div style={{ fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: colors.brand.ember, marginBottom: "6px" }}>
                 DAILY CHECK-IN
               </div>
-              <h3 style={{ margin: 0, fontSize: "20px", fontWeight: 700, color: "#F0E8E0" }}>
+              <h3 style={{ margin: 0, fontSize: typography.fontSize.xl, fontWeight: typography.fontWeight.bold, color: colors.foreground }}>
                 You showed up.
               </h3>
-              <p style={{ margin: "6px 0 0", fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: 1.5 }}>
+              <p style={{ margin: "6px 0 0", fontSize: "13px", color: alpha(colors.neutral[0], 0.4), lineHeight: typography.lineHeight.normal }}>
                 Mark today as done. Leave a note for your future self.
               </p>
             </div>
@@ -77,18 +78,18 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
               style={{
                 width: "100%",
                 padding: "14px 16px",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "12px",
-                color: "#F0E8E0",
+                background: alpha(colors.neutral[0], 0.04),
+                border: `1px solid ${alpha(colors.neutral[0], 0.1)}`,
+                borderRadius: borderRadius.lg,
+                color: colors.foreground,
                 fontSize: "15px",
                 outline: "none",
                 fontFamily: "inherit",
                 resize: "none",
-                lineHeight: 1.5,
+                lineHeight: typography.lineHeight.normal,
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "#E8613A44")}
-              onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
+              onFocus={(e) => (e.currentTarget.style.borderColor = `${colors.brand.ember}44`)}
+              onBlur={(e) => (e.currentTarget.style.borderColor = alpha(colors.neutral[0], 0.1))}
             />
 
             <div style={{ display: "flex", gap: "10px" }}>
@@ -98,10 +99,10 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
                   flex: 1,
                   padding: "14px",
                   background: "transparent",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "12px",
-                  color: "rgba(255,255,255,0.35)",
-                  fontSize: "14px",
+                  border: `1px solid ${alpha(colors.neutral[0], 0.1)}`,
+                  borderRadius: borderRadius.lg,
+                  color: alpha(colors.neutral[0], 0.35),
+                  fontSize: typography.fontSize.sm,
                   fontFamily: "inherit",
                   cursor: "pointer",
                 }}
@@ -113,15 +114,15 @@ export function CheckInPanel({ journeyId, onClose }: Props) {
                 style={{
                   flex: 2,
                   padding: "14px",
-                  background: "linear-gradient(135deg, #E8613A, #B84B2A)",
+                  background: `linear-gradient(135deg, ${colors.brand.ember}, ${colors.brand.emberDim})`,
                   border: "none",
-                  borderRadius: "12px",
-                  color: "#FFF8F4",
-                  fontSize: "14px",
-                  fontWeight: 600,
+                  borderRadius: borderRadius.lg,
+                  color: colors.brand.onEmber,
+                  fontSize: typography.fontSize.sm,
+                  fontWeight: typography.fontWeight.semibold,
                   fontFamily: "inherit",
                   cursor: "pointer",
-                  boxShadow: "0 4px 20px rgba(232,97,58,0.4)",
+                  boxShadow: shadows.emberButton,
                 }}
               >
                 Confirm check-in
