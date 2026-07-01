@@ -1,5 +1,5 @@
 import { ENVIRONMENT_STATES, type EnvironmentState } from "@/lib/config/environment-states";
-import { environmentPalette, animation } from "@/lib/config/tokens";
+import { environmentPalette, animation, typography, spacing, borderRadius } from "@/lib/config/tokens";
 
 interface Props {
   state: EnvironmentState;
@@ -14,27 +14,27 @@ export function EnvironmentDisplay({ state }: Props) {
       style={{
         background: palette.cardBg,
         border: `1px solid ${palette.border}`,
-        borderRadius: "16px",
-        padding: "20px",
+        borderRadius: borderRadius.xl,
+        padding: spacing[5],
         boxShadow: palette.glow,
         transition: animation.transition.environmentShift,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
-        <span style={{ fontSize: "28px", lineHeight: 1 }}>{config.symbolGlyph}</span>
+      <div style={{ display: "flex", alignItems: "center", gap: spacing[3], marginBottom: spacing[3] }}>
+        <span style={{ fontSize: typography.fontSize.display, lineHeight: 1 }}>{config.symbolGlyph}</span>
         <div>
-          <div style={{ fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: palette.text, opacity: 0.6, marginBottom: "2px" }}>
+          <div style={{ fontSize: typography.fontSize["2xs"], letterSpacing: "0.12em", textTransform: "uppercase", color: palette.text, opacity: 0.6, marginBottom: spacing[0.5] }}>
             ENVIRONMENT
           </div>
-          <div style={{ fontSize: "18px", fontWeight: 600, color: palette.text }}>
+          <div style={{ fontSize: typography.fontSize.lg, fontWeight: typography.fontWeight.semibold, color: palette.text }}>
             {config.label}
           </div>
         </div>
       </div>
-      <p style={{ fontSize: "13px", color: palette.text, opacity: 0.75, lineHeight: 1.5, margin: 0 }}>
+      <p style={{ fontSize: typography.fontSize.caption, color: palette.text, opacity: 0.75, lineHeight: typography.lineHeight.normal, margin: 0 }}>
         {config.description}
       </p>
-      <div style={{ marginTop: "10px", fontSize: "11px", color: palette.text, opacity: 0.45, fontStyle: "italic" }}>
+      <div style={{ marginTop: spacing[2.5], fontSize: typography.fontSize["2xs"], color: palette.text, opacity: 0.45, fontStyle: "italic" }}>
         {config.ambience}
       </div>
     </div>

@@ -12,7 +12,7 @@ export function StreakDisplay({ current, longest, totalCheckIns, missedDays }: P
     <div style={{
       display: "grid",
       gridTemplateColumns: "1fr 1fr",
-      gap: "10px",
+      gap: spacing[2.5],
     }}>
       <StatCard
         label="Current Streak"
@@ -61,11 +61,11 @@ function StatCard({
       background: highlight ? `${color}12` : alpha(colors.neutral[0], 0.03),
       border: `1px solid ${highlight ? color + "30" : alpha(colors.neutral[0], 0.06)}`,
       borderRadius: borderRadius.lg,
-      padding: "14px",
+      padding: spacing[3.5],
       textAlign: "center",
     }}>
       <div style={{
-        fontSize: "28px",
+        fontSize: typography.fontSize.display,
         fontWeight: typography.fontWeight.bold,
         color,
         lineHeight: 1,
@@ -73,12 +73,12 @@ function StatCard({
       }}>
         {value}
         {unit && (
-          <span style={{ fontSize: typography.fontSize.xs, fontWeight: typography.fontWeight.regular, marginLeft: "3px", opacity: 0.7 }}>
+          <span style={{ fontSize: typography.fontSize.xs, fontWeight: typography.fontWeight.regular, marginLeft: spacing[0.75], opacity: 0.7 }}>
             {unit}
           </span>
         )}
       </div>
-      <div style={{ fontSize: "11px", color: alpha(colors.neutral[0], 0.4), letterSpacing: "0.06em", textTransform: "uppercase" }}>
+      <div style={{ fontSize: typography.fontSize["2xs"], color: alpha(colors.neutral[0], 0.4), letterSpacing: "0.06em", textTransform: "uppercase" }}>
         {label}
       </div>
     </div>

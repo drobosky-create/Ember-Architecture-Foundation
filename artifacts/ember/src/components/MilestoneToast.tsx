@@ -31,7 +31,7 @@ export function MilestoneToast() {
         display: "flex",
         alignItems: "center",
         gap: spacing[3],
-        maxWidth: "380px",
+        maxWidth: spacing.toastMax,
         boxShadow: shadows.toast,
         backdropFilter: "blur(8px)",
         animation: "float 0.3s ease-out",
@@ -39,10 +39,10 @@ export function MilestoneToast() {
     >
       <span style={{ fontSize: typography.fontSize["2xl"], color: colors.brand.ember }}>{milestone.glyph}</span>
       <div>
-        <div style={{ fontSize: typography.fontSize.xs, letterSpacing: "0.1em", textTransform: "uppercase", color: colors.brand.ember, opacity: 0.8, marginBottom: "2px" }}>
+        <div style={{ fontSize: typography.fontSize.xs, letterSpacing: "0.1em", textTransform: "uppercase", color: colors.brand.ember, opacity: 0.8, marginBottom: spacing[0.5] }}>
           Milestone Unlocked
         </div>
-        <div style={{ fontSize: "15px", fontWeight: typography.fontWeight.semibold, color: colors.foreground, marginBottom: spacing[1] }}>
+        <div style={{ fontSize: typography.fontSize.input, fontWeight: typography.fontWeight.semibold, color: colors.foreground, marginBottom: spacing[1] }}>
           {milestone.label}
         </div>
         <div style={{ fontSize: typography.fontSize.xs, color: alpha(colors.foreground, 0.6), lineHeight: 1.4, fontStyle: "italic" }}>

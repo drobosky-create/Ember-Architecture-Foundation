@@ -32,7 +32,7 @@ export function CreateJourney({ onCreated }: Props) {
       <div style={{ marginBottom: spacing[12] }}>
         <div
           style={{
-            fontSize: "11px",
+            fontSize: typography.fontSize["2xs"],
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             color: colors.brand.ember,
@@ -43,7 +43,7 @@ export function CreateJourney({ onCreated }: Props) {
         </div>
         <h1
           style={{
-            fontSize: "28px",
+            fontSize: typography.fontSize.display,
             fontWeight: typography.fontWeight.bold,
             color: colors.foreground,
             lineHeight: typography.lineHeight.tight,
@@ -71,7 +71,7 @@ export function CreateJourney({ onCreated }: Props) {
           <label
             style={{
               display: "block",
-              fontSize: "11px",
+              fontSize: typography.fontSize["2xs"],
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               color: alpha(colors.neutral[0], 0.4),
@@ -88,7 +88,7 @@ export function CreateJourney({ onCreated }: Props) {
             maxLength={60}
             style={{
               width: "100%",
-              padding: "14px 16px",
+              padding: `${spacing[3.5]} ${spacing[4]}`,
               background: alpha(colors.neutral[0], 0.05),
               border: `1px solid ${alpha(colors.neutral[0], 0.12)}`,
               borderRadius: borderRadius.lg,
@@ -107,7 +107,7 @@ export function CreateJourney({ onCreated }: Props) {
           <label
             style={{
               display: "block",
-              fontSize: "11px",
+              fontSize: typography.fontSize["2xs"],
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               color: alpha(colors.neutral[0], 0.4),
@@ -127,12 +127,12 @@ export function CreateJourney({ onCreated }: Props) {
             maxLength={200}
             style={{
               width: "100%",
-              padding: "14px 16px",
+              padding: `${spacing[3.5]} ${spacing[4]}`,
               background: alpha(colors.neutral[0], 0.05),
               border: `1px solid ${alpha(colors.neutral[0], 0.12)}`,
               borderRadius: borderRadius.lg,
               color: colors.foreground,
-              fontSize: "15px",
+              fontSize: typography.fontSize.input,
               outline: "none",
               fontFamily: "inherit",
               resize: "none",
@@ -154,7 +154,7 @@ export function CreateJourney({ onCreated }: Props) {
             border: "none",
             borderRadius: borderRadius.lg,
             color: name.trim() ? colors.brand.onEmber : alpha(colors.neutral[0], 0.25),
-            fontSize: "15px",
+            fontSize: typography.fontSize.input,
             fontWeight: typography.fontWeight.semibold,
             fontFamily: "inherit",
             cursor: name.trim() ? "pointer" : "not-allowed",
