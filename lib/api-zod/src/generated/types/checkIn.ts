@@ -6,6 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface CheckIn {
+  id: string;
+  journeyId: string;
+  date: string;
+  note: string;
+  completedAt: string;
 }

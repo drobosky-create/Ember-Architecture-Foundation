@@ -10,6 +10,10 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: user
+    description: Current-user operations
+  - name: journeys
+    description: Journey persistence
 paths:
   /healthz:
     get:
@@ -24,6 +28,91 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /me:
+    get:
+      operationId: getMe
+      tags: [user]
+      summary: Current user's app profile
+      responses:
+        "200":
+          description: The signed-in user's profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+  /journeys:
+    get:
+      operationId: listJourneys
+      tags: [journeys]
+      summary: List the signed-in user's journeys (with check-ins, scars, milestones)
+      responses:
+        "200":
+          description: All journeys for the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JourneyData"
+    post:
+      operationId: createJourney
+      tags: [journeys]
+      summary: Create a journey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateJourneyRequest"
+      responses:
+        "201":
+          description: The created journey
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JourneyData"
+  /journeys/{journeyId}/check-ins:
+    post:
+      operationId: checkIn
+      tags: [journeys]
+      summary: Record a check-in (with any client-computed scar / milestones)
+      parameters:
+        - name: journeyId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckInRequest"
+      responses:
+        "200":
+          description: The updated journey
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JourneyData"
+  /journeys/{journeyId}/reset:
+    post:
+      operationId: resetJourney
+      tags: [journeys]
+      summary: Clear a journey's check-ins, scars and milestones
+      parameters:
+        - name: journeyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The reset journey
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JourneyData"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +122,94 @@ components:
           type: string
       required:
         - status
-
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        subscriptionStatus:
+          type: [string, "null"]
+        aiReflectionOptIn:
+          type: boolean
+      required: [id, aiReflectionOptIn]
+    # Dates are plain strings ("YYYY-MM-DD") and timestamps are ISO strings.
+    # Deliberately NOT format:date/date-time so codegen keeps them as strings
+    # (the engine works in date strings; no Date coercion).
+    Journey:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        intention: { type: string }
+        createdAt: { type: string }
+        startDate: { type: string }
+      required: [id, name, intention, createdAt, startDate]
+    CheckIn:
+      type: object
+      properties:
+        id: { type: string }
+        journeyId: { type: string }
+        date: { type: string }
+        note: { type: string }
+        completedAt: { type: string }
+      required: [id, journeyId, date, note, completedAt]
+    Scar:
+      type: object
+      properties:
+        id: { type: string }
+        journeyId: { type: string }
+        brokenAt: { type: string }
+        streakAtBreak: { type: integer }
+        description: { type: string }
+      required: [id, journeyId, brokenAt, streakAtBreak, description]
+    UnlockedMilestone:
+      type: object
+      properties:
+        milestoneId: { type: string }
+        unlockedAt: { type: string }
+      required: [milestoneId, unlockedAt]
+    JourneyData:
+      type: object
+      properties:
+        journey:
+          $ref: "#/components/schemas/Journey"
+        checkIns:
+          type: array
+          items: { $ref: "#/components/schemas/CheckIn" }
+        scars:
+          type: array
+          items: { $ref: "#/components/schemas/Scar" }
+        unlockedMilestones:
+          type: array
+          items: { $ref: "#/components/schemas/UnlockedMilestone" }
+      required: [journey, checkIns, scars, unlockedMilestones]
+    CreateJourneyRequest:
+      type: object
+      properties:
+        name: { type: string }
+        intention: { type: string }
+        startDate: { type: string }
+      required: [name, intention, startDate]
+    NewScar:
+      type: object
+      properties:
+        brokenAt: { type: string }
+        streakAtBreak: { type: integer }
+        description: { type: string }
+      required: [brokenAt, streakAtBreak, description]
+    CheckInRequest:
+      type: object
+      description: >-
+        The client's engine computes any scar formed and milestones unlocked by
+        this check-in and sends them; the server persists them atomically.
+      properties:
+        date: { type: string }
+        note: { type: string }
+        newScar:
+          oneOf:
+            - $ref: "#/components/schemas/NewScar"
+            - type: "null"
+        newMilestoneIds:
+          type: array
+          items: { type: string }
+      required: [date, note, newMilestoneIds]
