@@ -70,3 +70,14 @@
 .anim-shake { animation: shake 0.5s ease-in-out; }
 .anim-fade  { animation: fade-pulse 3s ease-in-out infinite; }
 .anim-still { opacity: 0.4; }
+
+/* EmberMark: flame vitality (colors come from --ember-* vars set in the component) */
+@keyframes ember-flicker {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  25% { opacity: 0.6; transform: scaleY(0.96); }
+  50% { opacity: 0.95; transform: scaleY(1.03); }
+  75% { opacity: 0.55; transform: scaleY(0.98); }
+}
+.ember-mark-flame { transform-box: fill-box; transform-origin: 50% 92%; }
+.ember-glow { filter: drop-shadow(0 0 10px var(--ember-glow)) drop-shadow(0 0 20px var(--ember-glow)); }
+.ember-flicker { animation: ember-flicker 0.9s steps(2, end) infinite; }
