@@ -19,9 +19,9 @@ export const usersTable = pgTable("users", {
   id: text("id").primaryKey(), // Clerk user id
   stripeCustomerId: text("stripe_customer_id"),
   subscriptionStatus: text("subscription_status"),
-  subscriptionPeriodEnd: timestamp("subscription_period_end", { withTimezone: true }),
+  subscriptionPeriodEnd: timestamp("subscription_period_end", { withTimezone: true, mode: "string" }),
   aiReflectionOptIn: boolean("ai_reflection_opt_in").notNull().default(false),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
 });
 
 export const journeysTable = pgTable("journeys", {
@@ -31,7 +31,7 @@ export const journeysTable = pgTable("journeys", {
     .references(() => usersTable.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   intention: text("intention").notNull().default(""),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
   startDate: date("start_date", { mode: "string" }).notNull(),
 });
 
@@ -42,7 +42,7 @@ export const checkInsTable = pgTable("check_ins", {
     .references(() => journeysTable.id, { onDelete: "cascade" }),
   date: date("date", { mode: "string" }).notNull(),
   note: text("note").notNull().default(""),
-  completedAt: timestamp("completed_at", { withTimezone: true }).notNull().defaultNow(),
+  completedAt: timestamp("completed_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
 });
 
 export const scarsTable = pgTable("scars", {
@@ -61,7 +61,7 @@ export const unlockedMilestonesTable = pgTable("unlocked_milestones", {
     .notNull()
     .references(() => journeysTable.id, { onDelete: "cascade" }),
   milestoneId: text("milestone_id").notNull(),
-  unlockedAt: timestamp("unlocked_at", { withTimezone: true }).notNull().defaultNow(),
+  unlockedAt: timestamp("unlocked_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
 });
 
 export type User = typeof usersTable.$inferSelect;
