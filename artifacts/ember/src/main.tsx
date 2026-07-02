@@ -12,8 +12,9 @@ if (!publishableKey) {
   );
 }
 
-// Point the generated API client at the api-server (Clerk token is wired in App).
-setBaseUrl(import.meta.env.VITE_API_BASE_URL ?? "/api");
+// Point the generated API client at the api-server origin. The client already
+// prefixes /api, so this must be the ORIGIN only (empty = same-origin).
+setBaseUrl(import.meta.env.VITE_API_BASE_URL ?? "");
 
 // Match Clerk's prebuilt UI to the ember dark theme (tokens stay the source).
 const appearance = {
