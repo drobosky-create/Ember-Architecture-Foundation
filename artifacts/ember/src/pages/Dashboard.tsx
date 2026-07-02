@@ -21,12 +21,10 @@ export function Dashboard() {
   const journeyData = useJourneyStore(
     (s) => s.activeJourneyId ? s.journeys[s.activeJourneyId] ?? null : null
   );
-  const simulateMissedDays = useJourneyStore((s) => s.simulateMissedDays);
   const resetJourney = useJourneyStore((s) => s.resetJourney);
 
   const [tab, setTab] = useState<Tab>("home");
   const [showCheckIn, setShowCheckIn] = useState(false);
-  const [simulating, setSimulating] = useState(false);
 
   if (!journeyData) return null;
 
@@ -38,15 +36,8 @@ export function Dashboard() {
   const checkedInToday = checkIns.some((c) => c.date === todayString());
   const pageBg = environmentPalette[stats.environmentState].pageBg;
 
-  function handleSimulateMiss() {
-    if (simulating) return;
-    setSimulating(true);
-    simulateMissedDays(journey.id, 3);
-    setTimeout(() => setSimulating(false), 600);
-  }
-
   function handleReset() {
-    resetJourney(journey.id);
+    void resetJourney(journey.id);
   }
 
   return (
@@ -164,22 +155,6 @@ export function Dashboard() {
                 Prototype Controls
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[2] }}>
-                <button
-                  onClick={handleSimulateMiss}
-                  disabled={simulating}
-                  style={{
-                    padding: `${spacing[2]} ${spacing[3.5]}`,
-                    background: alpha(colors.accent.danger, 0.15),
-                    border: `1px solid ${alpha(colors.accent.danger, 0.3)}`,
-                    borderRadius: borderRadius.md,
-                    color: colors.accent.dangerText,
-                    fontSize: typography.fontSize.xs,
-                    fontFamily: "inherit",
-                    cursor: "pointer",
-                  }}
-                >
-                  Simulate 3 missed days
-                </button>
                 <button
                   onClick={handleReset}
                   style={{
